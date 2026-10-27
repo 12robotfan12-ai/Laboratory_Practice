@@ -1,0 +1,526 @@
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/main.c"
+  20              		.section	.text.delay,"ax",%progbits
+  21              		.align	1
+  22              		.global	delay
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	delay:
+  28              	.LVL0:
+  29              	.LFB0:
+   1:Core/Src/main.c **** #include <stdint.h>
+   2:Core/Src/main.c **** #include "init.h"
+   3:Core/Src/main.c **** 
+   4:Core/Src/main.c **** // Задержка для защиты от дребезга контактов кнопки
+   5:Core/Src/main.c **** void delay(volatile uint32_t count)
+   6:Core/Src/main.c **** {
+  30              		.loc 1 6 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 6 1 is_stmt 0 view .LVU1
+  36 0000 82B0     		sub	sp, sp, #8
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 8
+  39 0002 0190     		str	r0, [sp, #4]
+   7:Core/Src/main.c ****     while (count--)
+  40              		.loc 1 7 5 is_stmt 1 view .LVU2
+  41              	.L2:
+  42              		.loc 1 7 12 discriminator 1 view .LVU3
+  43              		.loc 1 7 17 is_stmt 0 discriminator 1 view .LVU4
+  44 0004 019B     		ldr	r3, [sp, #4]
+  45 0006 5A1E     		subs	r2, r3, #1
+  46 0008 0192     		str	r2, [sp, #4]
+  47              		.loc 1 7 12 discriminator 1 view .LVU5
+  48 000a 002B     		cmp	r3, #0
+  49 000c FAD1     		bne	.L2
+   8:Core/Src/main.c ****         ;
+   9:Core/Src/main.c **** }
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 2
+
+
+  50              		.loc 1 9 1 view .LVU6
+  51 000e 02B0     		add	sp, sp, #8
+  52              	.LCFI1:
+  53              		.cfi_def_cfa_offset 0
+  54              		@ sp needed
+  55 0010 7047     		bx	lr
+  56              		.cfi_endproc
+  57              	.LFE0:
+  59              		.section	.text.main,"ax",%progbits
+  60              		.align	1
+  61              		.global	main
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  66              	main:
+  67              	.LFB1:
+  10:Core/Src/main.c **** 
+  11:Core/Src/main.c **** int main(void)
+  12:Core/Src/main.c **** {
+  68              		.loc 1 12 1 is_stmt 1 view -0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 38B5     		push	{r3, r4, r5, lr}
+  73              	.LCFI2:
+  74              		.cfi_def_cfa_offset 16
+  75              		.cfi_offset 3, -16
+  76              		.cfi_offset 4, -12
+  77              		.cfi_offset 5, -8
+  78              		.cfi_offset 14, -4
+  13:Core/Src/main.c ****     GPIO_Ini(); // Инициализация портов GPIO
+  79              		.loc 1 13 5 view .LVU8
+  80 0002 FFF7FEFF 		bl	GPIO_Ini
+  81              	.LVL1:
+  14:Core/Src/main.c **** 
+  15:Core/Src/main.c ****     uint8_t step = 0;     // Счётчик нажатий "нулевой" кнопки (от 0 д
+  82              		.loc 1 15 5 view .LVU9
+  16:Core/Src/main.c ****     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
+  83              		.loc 1 16 5 view .LVU10
+  84              		.loc 1 16 13 is_stmt 0 view .LVU11
+  85 0006 0022     		movs	r2, #0
+  15:Core/Src/main.c ****     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
+  86              		.loc 1 15 13 view .LVU12
+  87 0008 1546     		mov	r5, r2
+  88 000a B5E0     		b	.L5
+  89              	.LVL2:
+  90              	.L7:
+  15:Core/Src/main.c ****     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
+  91              		.loc 1 15 13 view .LVU13
+  92 000c 053D     		subs	r5, r5, #5
+  93 000e EDB2     		uxtb	r5, r5
+  94 0010 F92D     		cmp	r5, #249
+  95 0012 49D8     		bhi	.L29
+  96              	.LBB2:
+  17:Core/Src/main.c **** 
+  18:Core/Src/main.c ****     while (1)
+  19:Core/Src/main.c ****     {
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 3
+
+
+  20:Core/Src/main.c ****         // Считываем 0-й бит регистра GPIOF_IDR (пин PF0) делением 
+  21:Core/Src/main.c ****         uint8_t btn0_now = (GPIOF_IDR >> 0) % 2;
+  22:Core/Src/main.c **** 
+  23:Core/Src/main.c ****         // 1) Обработка нажатия "нулевой" управляющей кнопк�
+  24:Core/Src/main.c ****         if (btn0_now == 1 && btn0_old == 0)
+  25:Core/Src/main.c ****         {
+  26:Core/Src/main.c ****             step++;
+  27:Core/Src/main.c **** 
+  28:Core/Src/main.c ****             if (step == 1)
+  29:Core/Src/main.c ****             {
+  30:Core/Src/main.c ****                 // 1-е нажатие: 1-й порт (PF1) переходит в режим ВЫХ
+  31:Core/Src/main.c ****                 BIT_SET(GPIOF_MODER, 0x04UL);
+  32:Core/Src/main.c ****             }
+  33:Core/Src/main.c ****             else if (step == 2)
+  34:Core/Src/main.c ****             {
+  35:Core/Src/main.c ****                 // 2-е нажатие: 2-й порт (PF2) переходит в режим ВЫХ
+  36:Core/Src/main.c ****                 BIT_SET(GPIOF_MODER, 0x10UL);
+  37:Core/Src/main.c ****             }
+  38:Core/Src/main.c ****             else if (step == 3)
+  39:Core/Src/main.c ****             {
+  40:Core/Src/main.c ****                 // 3-е нажатие: 3-й порт (PF3) переходит в режим ВЫХ
+  41:Core/Src/main.c ****                 BIT_SET(GPIOF_MODER, 0x40UL);
+  42:Core/Src/main.c ****             }
+  43:Core/Src/main.c ****             else if (step == 4)
+  44:Core/Src/main.c ****             {
+  45:Core/Src/main.c ****                 // 5-е нажатие: все порты возвращаются в режим В
+  46:Core/Src/main.c ****                 GPIOF_MODER = 0x00UL;
+  47:Core/Src/main.c ****             }
+  48:Core/Src/main.c ****             else if (step == 5)
+  49:Core/Src/main.c ****             {
+  50:Core/Src/main.c ****                 // 4-е нажатие: все 3 порта (PF1, PF2, PF3) в режим ВЫХО�
+  51:Core/Src/main.c ****                 BIT_SET(GPIOF_MODER, 0x04UL | 0x10UL | 0x40UL);
+  52:Core/Src/main.c ****             }
+  53:Core/Src/main.c ****             else if (step >= 6)
+  54:Core/Src/main.c ****             {
+  55:Core/Src/main.c ****                 // 5-е нажатие: все порты возвращаются в режим В
+  56:Core/Src/main.c ****                 GPIOF_MODER = 0x00UL;
+  97              		.loc 1 56 17 is_stmt 1 view .LVU14
+  98              		.loc 1 56 29 is_stmt 0 view .LVU15
+  99 0014 674B     		ldr	r3, .L31
+ 100              	.LVL3:
+ 101              		.loc 1 56 29 view .LVU16
+ 102 0016 0021     		movs	r1, #0
+ 103 0018 C3F80014 		str	r1, [r3, #1024]
+  57:Core/Src/main.c ****                 // Гасим все 3 внешних светодиода (биты сброса 1
+  58:Core/Src/main.c ****                 BIT_SET(GPIOF_BSRR, (1UL << 17) | (1UL << 18) | (1UL << 19));
+ 104              		.loc 1 58 17 is_stmt 1 view .LVU17
+ 105 001c D3F81814 		ldr	r1, [r3, #1048]
+ 106 0020 41F46021 		orr	r1, r1, #917504
+ 107 0024 C3F81814 		str	r1, [r3, #1048]
+  59:Core/Src/main.c ****                 step = 0; // Цикл повторяется
+ 108              		.loc 1 59 17 view .LVU18
+ 109              	.LVL4:
+ 110              		.loc 1 59 22 is_stmt 0 view .LVU19
+ 111 0028 1546     		mov	r5, r2
+ 112 002a 07E0     		b	.L8
+ 113              	.LVL5:
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 4
+
+
+ 114              	.L14:
+  31:Core/Src/main.c ****             }
+ 115              		.loc 1 31 17 is_stmt 1 view .LVU20
+ 116 002c 6149     		ldr	r1, .L31
+ 117 002e D1F80024 		ldr	r2, [r1, #1024]
+ 118 0032 42F00402 		orr	r2, r2, #4
+ 119 0036 C1F80024 		str	r2, [r1, #1024]
+  26:Core/Src/main.c **** 
+ 120              		.loc 1 26 17 is_stmt 0 view .LVU21
+ 121 003a 1D46     		mov	r5, r3
+ 122              	.LVL6:
+ 123              	.L8:
+  60:Core/Src/main.c ****             }
+  61:Core/Src/main.c **** 
+  62:Core/Src/main.c ****             delay(300000); // Пауза от дребезга контактов
+ 124              		.loc 1 62 13 is_stmt 1 view .LVU22
+ 125 003c 5E48     		ldr	r0, .L31+4
+ 126 003e FFF7FEFF 		bl	delay
+ 127              	.LVL7:
+ 128              	.L6:
+  63:Core/Src/main.c ****         }
+  64:Core/Src/main.c ****         btn0_old = btn0_now;
+ 129              		.loc 1 64 9 view .LVU23
+  65:Core/Src/main.c **** 
+  66:Core/Src/main.c ****         // 2) Работа 1-го порта (PF1):
+  67:Core/Src/main.c ****         if (step < 1) // Режим ВХОДА
+ 130              		.loc 1 67 9 view .LVU24
+ 131              		.loc 1 67 12 is_stmt 0 view .LVU25
+ 132 0042 002D     		cmp	r5, #0
+ 133 0044 3AD1     		bne	.L16
+  68:Core/Src/main.c ****         {
+  69:Core/Src/main.c ****             if ((GPIOF_IDR >> 1) % 2 != 0)
+ 134              		.loc 1 69 13 is_stmt 1 view .LVU26
+ 135              		.loc 1 69 18 is_stmt 0 view .LVU27
+ 136 0046 5B4B     		ldr	r3, .L31
+ 137 0048 D3F81034 		ldr	r3, [r3, #1040]
+ 138              		.loc 1 69 16 view .LVU28
+ 139 004c 13F0020F 		tst	r3, #2
+ 140 0050 2CD0     		beq	.L17
+  70:Core/Src/main.c ****             {
+  71:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 0)); // Удерживается Кнопка 1 -> За
+ 141              		.loc 1 71 17 is_stmt 1 view .LVU29
+ 142 0052 5A4A     		ldr	r2, .L31+8
+ 143 0054 D2F81834 		ldr	r3, [r2, #1048]
+ 144 0058 43F00103 		orr	r3, r3, #1
+ 145 005c C2F81834 		str	r3, [r2, #1048]
+ 146 0060 3BE0     		b	.L18
+ 147              	.LVL8:
+ 148              	.L13:
+  36:Core/Src/main.c ****             }
+ 149              		.loc 1 36 17 view .LVU30
+ 150 0062 5449     		ldr	r1, .L31
+ 151 0064 D1F80024 		ldr	r2, [r1, #1024]
+ 152 0068 42F01002 		orr	r2, r2, #16
+ 153 006c C1F80024 		str	r2, [r1, #1024]
+  26:Core/Src/main.c **** 
+ 154              		.loc 1 26 17 is_stmt 0 view .LVU31
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 5
+
+
+ 155 0070 1D46     		mov	r5, r3
+ 156 0072 E3E7     		b	.L8
+ 157              	.L12:
+  41:Core/Src/main.c ****             }
+ 158              		.loc 1 41 17 is_stmt 1 view .LVU32
+ 159 0074 4F49     		ldr	r1, .L31
+ 160 0076 D1F80024 		ldr	r2, [r1, #1024]
+ 161 007a 42F04002 		orr	r2, r2, #64
+ 162 007e C1F80024 		str	r2, [r1, #1024]
+  26:Core/Src/main.c **** 
+ 163              		.loc 1 26 17 is_stmt 0 view .LVU33
+ 164 0082 1D46     		mov	r5, r3
+ 165 0084 DAE7     		b	.L8
+ 166              	.L11:
+  46:Core/Src/main.c ****             }
+ 167              		.loc 1 46 17 is_stmt 1 view .LVU34
+  46:Core/Src/main.c ****             }
+ 168              		.loc 1 46 29 is_stmt 0 view .LVU35
+ 169 0086 4B4A     		ldr	r2, .L31
+ 170 0088 0021     		movs	r1, #0
+ 171 008a C2F80014 		str	r1, [r2, #1024]
+  26:Core/Src/main.c **** 
+ 172              		.loc 1 26 17 view .LVU36
+ 173 008e 1D46     		mov	r5, r3
+ 174 0090 D4E7     		b	.L8
+ 175              	.L9:
+  51:Core/Src/main.c ****             }
+ 176              		.loc 1 51 17 is_stmt 1 view .LVU37
+ 177 0092 4849     		ldr	r1, .L31
+ 178 0094 D1F80024 		ldr	r2, [r1, #1024]
+ 179 0098 42F05402 		orr	r2, r2, #84
+ 180 009c C1F80024 		str	r2, [r1, #1024]
+  26:Core/Src/main.c **** 
+ 181              		.loc 1 26 17 is_stmt 0 view .LVU38
+ 182 00a0 1D46     		mov	r5, r3
+ 183 00a2 CBE7     		b	.L8
+ 184              	.L25:
+ 185 00a4 1D46     		mov	r5, r3
+ 186 00a6 C9E7     		b	.L8
+ 187              	.LVL9:
+ 188              	.L29:
+  26:Core/Src/main.c **** 
+ 189              		.loc 1 26 17 view .LVU39
+ 190 00a8 1D46     		mov	r5, r3
+ 191 00aa C7E7     		b	.L8
+ 192              	.LVL10:
+ 193              	.L17:
+  72:Core/Src/main.c ****             }
+  73:Core/Src/main.c ****             else
+  74:Core/Src/main.c ****             {
+  75:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 16)); // Отпущена -> Гасим PB0 (бит 16 
+ 194              		.loc 1 75 17 is_stmt 1 view .LVU40
+ 195 00ac 434A     		ldr	r2, .L31+8
+ 196 00ae D2F81834 		ldr	r3, [r2, #1048]
+ 197 00b2 43F48033 		orr	r3, r3, #65536
+ 198 00b6 C2F81834 		str	r3, [r2, #1048]
+ 199 00ba 0EE0     		b	.L18
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 6
+
+
+ 200              	.L16:
+  76:Core/Src/main.c ****             }
+  77:Core/Src/main.c ****         }
+  78:Core/Src/main.c ****         else // Режим ВЫХОДА
+  79:Core/Src/main.c ****         {
+  80:Core/Src/main.c ****             BIT_SET(GPIOB_BSRR, (1UL << 16)); // Гасим светодиод на плате (PB0
+ 201              		.loc 1 80 13 view .LVU41
+ 202 00bc 3F4A     		ldr	r2, .L31+8
+ 203 00be D2F81834 		ldr	r3, [r2, #1048]
+ 204 00c2 43F48033 		orr	r3, r3, #65536
+ 205 00c6 C2F81834 		str	r3, [r2, #1048]
+  81:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 1));  // Горит светодиод, подключен�
+ 206              		.loc 1 81 13 view .LVU42
+ 207 00ca 02F58052 		add	r2, r2, #4096
+ 208 00ce D2F81834 		ldr	r3, [r2, #1048]
+ 209 00d2 43F00203 		orr	r3, r3, #2
+ 210 00d6 C2F81834 		str	r3, [r2, #1048]
+ 211              	.L18:
+  82:Core/Src/main.c ****         }
+  83:Core/Src/main.c **** 
+  84:Core/Src/main.c ****         // 3) Работа 2-го порта (PF2):
+  85:Core/Src/main.c ****         if (step < 2) // Режим ВХОДА
+ 212              		.loc 1 85 9 view .LVU43
+ 213              		.loc 1 85 12 is_stmt 0 view .LVU44
+ 214 00da 012D     		cmp	r5, #1
+ 215 00dc 1ED9     		bls	.L30
+  86:Core/Src/main.c ****         {
+  87:Core/Src/main.c ****             if ((GPIOF_IDR >> 2) % 2 != 0)
+  88:Core/Src/main.c ****             {
+  89:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 7)); // Удерживается Кнопка 2 -> За
+  90:Core/Src/main.c ****             }
+  91:Core/Src/main.c ****             else
+  92:Core/Src/main.c ****             {
+  93:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 23)); // Отпущена -> Гасим PB7 (бит 7+1
+  94:Core/Src/main.c ****             }
+  95:Core/Src/main.c ****         }
+  96:Core/Src/main.c ****         else // Режим ВЫХОДА
+  97:Core/Src/main.c ****         {
+  98:Core/Src/main.c ****             BIT_SET(GPIOB_BSRR, (1UL << 23)); // Гасим синий LED на плате
+ 216              		.loc 1 98 13 is_stmt 1 view .LVU45
+ 217 00de 374A     		ldr	r2, .L31+8
+ 218 00e0 D2F81834 		ldr	r3, [r2, #1048]
+ 219 00e4 43F40003 		orr	r3, r3, #8388608
+ 220 00e8 C2F81834 		str	r3, [r2, #1048]
+  99:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 2));  // Горит светодиод, подключен�
+ 221              		.loc 1 99 13 view .LVU46
+ 222 00ec 02F58052 		add	r2, r2, #4096
+ 223 00f0 D2F81834 		ldr	r3, [r2, #1048]
+ 224 00f4 43F00403 		orr	r3, r3, #4
+ 225 00f8 C2F81834 		str	r3, [r2, #1048]
+ 226              	.L21:
+ 100:Core/Src/main.c ****         }
+ 101:Core/Src/main.c **** 
+ 102:Core/Src/main.c ****         // 4) Работа 3-го порта (PF3):
+ 103:Core/Src/main.c ****         if (step < 3) // Режим ВХОДА
+ 227              		.loc 1 103 9 view .LVU47
+ 228              		.loc 1 103 12 is_stmt 0 view .LVU48
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 7
+
+
+ 229 00fc 022D     		cmp	r5, #2
+ 230 00fe 2BD8     		bhi	.L22
+ 104:Core/Src/main.c ****         {
+ 105:Core/Src/main.c ****             if ((GPIOF_IDR >> 3) % 2 != 0)
+ 231              		.loc 1 105 13 is_stmt 1 view .LVU49
+ 232              		.loc 1 105 18 is_stmt 0 view .LVU50
+ 233 0100 2C4B     		ldr	r3, .L31
+ 234 0102 D3F81034 		ldr	r3, [r3, #1040]
+ 235              		.loc 1 105 16 view .LVU51
+ 236 0106 13F0080F 		tst	r3, #8
+ 237 010a 1DD0     		beq	.L23
+ 106:Core/Src/main.c ****             {
+ 107:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 14)); // Удерживается Кнопка 3 -> З�
+ 238              		.loc 1 107 17 is_stmt 1 view .LVU52
+ 239 010c 2B4A     		ldr	r2, .L31+8
+ 240 010e D2F81834 		ldr	r3, [r2, #1048]
+ 241 0112 43F48043 		orr	r3, r3, #16384
+ 242 0116 C2F81834 		str	r3, [r2, #1048]
+ 243 011a 2CE0     		b	.L24
+ 244              	.L30:
+  87:Core/Src/main.c ****             {
+ 245              		.loc 1 87 13 view .LVU53
+  87:Core/Src/main.c ****             {
+ 246              		.loc 1 87 18 is_stmt 0 view .LVU54
+ 247 011c 254B     		ldr	r3, .L31
+ 248 011e D3F81034 		ldr	r3, [r3, #1040]
+  87:Core/Src/main.c ****             {
+ 249              		.loc 1 87 16 view .LVU55
+ 250 0122 13F0040F 		tst	r3, #4
+ 251 0126 07D0     		beq	.L20
+  89:Core/Src/main.c ****             }
+ 252              		.loc 1 89 17 is_stmt 1 view .LVU56
+ 253 0128 244A     		ldr	r2, .L31+8
+ 254 012a D2F81834 		ldr	r3, [r2, #1048]
+ 255 012e 43F08003 		orr	r3, r3, #128
+ 256 0132 C2F81834 		str	r3, [r2, #1048]
+ 257 0136 E1E7     		b	.L21
+ 258              	.L20:
+  93:Core/Src/main.c ****             }
+ 259              		.loc 1 93 17 view .LVU57
+ 260 0138 204A     		ldr	r2, .L31+8
+ 261 013a D2F81834 		ldr	r3, [r2, #1048]
+ 262 013e 43F40003 		orr	r3, r3, #8388608
+ 263 0142 C2F81834 		str	r3, [r2, #1048]
+ 264 0146 D9E7     		b	.L21
+ 265              	.L23:
+ 108:Core/Src/main.c ****             }
+ 109:Core/Src/main.c ****             else
+ 110:Core/Src/main.c ****             {
+ 111:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 30)); // Отпущена -> Гасим PB14 (бит 14
+ 266              		.loc 1 111 17 view .LVU58
+ 267 0148 1C4A     		ldr	r2, .L31+8
+ 268 014a D2F81834 		ldr	r3, [r2, #1048]
+ 269 014e 43F08043 		orr	r3, r3, #1073741824
+ 270 0152 C2F81834 		str	r3, [r2, #1048]
+ 271 0156 0EE0     		b	.L24
+ 272              	.L22:
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 8
+
+
+ 112:Core/Src/main.c ****             }
+ 113:Core/Src/main.c ****         }
+ 114:Core/Src/main.c ****         else // Режим ВЫХОДА
+ 115:Core/Src/main.c ****         {
+ 116:Core/Src/main.c ****             BIT_SET(GPIOB_BSRR, (1UL << 30)); // Гасим красный LED на плате
+ 273              		.loc 1 116 13 view .LVU59
+ 274 0158 184A     		ldr	r2, .L31+8
+ 275 015a D2F81834 		ldr	r3, [r2, #1048]
+ 276 015e 43F08043 		orr	r3, r3, #1073741824
+ 277 0162 C2F81834 		str	r3, [r2, #1048]
+ 117:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 3));  // Горит светодиод, подключен�
+ 278              		.loc 1 117 13 view .LVU60
+ 279 0166 02F58052 		add	r2, r2, #4096
+ 280 016a D2F81834 		ldr	r3, [r2, #1048]
+ 281 016e 43F00803 		orr	r3, r3, #8
+ 282 0172 C2F81834 		str	r3, [r2, #1048]
+ 283              	.L24:
+ 284              	.LBE2:
+  12:Core/Src/main.c ****     GPIO_Ini(); // Инициализация портов GPIO
+ 285              		.loc 1 12 1 is_stmt 0 view .LVU61
+ 286 0176 2246     		mov	r2, r4
+ 287              	.LVL11:
+ 288              	.L5:
+  18:Core/Src/main.c ****     {
+ 289              		.loc 1 18 5 is_stmt 1 view .LVU62
+ 290              	.LBB3:
+  21:Core/Src/main.c **** 
+ 291              		.loc 1 21 9 view .LVU63
+  21:Core/Src/main.c **** 
+ 292              		.loc 1 21 29 is_stmt 0 view .LVU64
+ 293 0178 0E4B     		ldr	r3, .L31
+ 294 017a D3F81044 		ldr	r4, [r3, #1040]
+ 295              	.LVL12:
+  24:Core/Src/main.c ****         {
+ 296              		.loc 1 24 9 is_stmt 1 view .LVU65
+  24:Core/Src/main.c ****         {
+ 297              		.loc 1 24 12 is_stmt 0 view .LVU66
+ 298 017e 14F00104 		ands	r4, r4, #1
+ 299              	.LVL13:
+  24:Core/Src/main.c ****         {
+ 300              		.loc 1 24 12 view .LVU67
+ 301 0182 3FF45EAF 		beq	.L6
+  24:Core/Src/main.c ****         {
+ 302              		.loc 1 24 27 discriminator 1 view .LVU68
+ 303 0186 002A     		cmp	r2, #0
+ 304 0188 7FF45BAF 		bne	.L6
+  26:Core/Src/main.c **** 
+ 305              		.loc 1 26 13 is_stmt 1 view .LVU69
+  26:Core/Src/main.c **** 
+ 306              		.loc 1 26 17 is_stmt 0 view .LVU70
+ 307 018c 6B1C     		adds	r3, r5, #1
+ 308 018e DBB2     		uxtb	r3, r3
+ 309              	.LVL14:
+  28:Core/Src/main.c ****             {
+ 310              		.loc 1 28 13 is_stmt 1 view .LVU71
+ 311 0190 042D     		cmp	r5, #4
+ 312 0192 3FF63BAF 		bhi	.L7
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 9
+
+
+ 313 0196 042D     		cmp	r5, #4
+ 314 0198 84D8     		bhi	.L25
+ 315 019a 01A2     		adr	r2, .L10
+ 316 019c 52F825F0 		ldr	pc, [r2, r5, lsl #2]
+ 317              	.LVL15:
+ 318              		.p2align 2
+ 319              	.L10:
+ 320 01a0 2D000000 		.word	.L14+1
+ 321 01a4 63000000 		.word	.L13+1
+ 322 01a8 75000000 		.word	.L12+1
+ 323 01ac 87000000 		.word	.L11+1
+ 324 01b0 93000000 		.word	.L9+1
+ 325              		.p2align 1
+ 326              	.L32:
+  28:Core/Src/main.c ****             {
+ 327              		.loc 1 28 13 is_stmt 0 view .LVU72
+ 328              		.align	2
+ 329              	.L31:
+ 330 01b4 00100240 		.word	1073876992
+ 331 01b8 E0930400 		.word	300000
+ 332 01bc 00000240 		.word	1073872896
+ 333              	.LBE3:
+ 334              		.cfi_endproc
+ 335              	.LFE1:
+ 337              		.text
+ 338              	.Letext0:
+ 339              		.file 2 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/machine/_default_types.
+ 340              		.file 3 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/sys/_stdint.h"
+ 341              		.file 4 "Core/Inc/init.h"
+ARM GAS  C:\Users\user\AppData\Local\Temp\cc5m52te.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\user\AppData\Local\Temp\cc5m52te.s:21     .text.delay:00000000 $t
+C:\Users\user\AppData\Local\Temp\cc5m52te.s:27     .text.delay:00000000 delay
+C:\Users\user\AppData\Local\Temp\cc5m52te.s:60     .text.main:00000000 $t
+C:\Users\user\AppData\Local\Temp\cc5m52te.s:66     .text.main:00000000 main
+C:\Users\user\AppData\Local\Temp\cc5m52te.s:320    .text.main:000001a0 $d
+C:\Users\user\AppData\Local\Temp\cc5m52te.s:330    .text.main:000001b4 $d
+
+UNDEFINED SYMBOLS
+GPIO_Ini

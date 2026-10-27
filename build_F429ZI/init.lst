@@ -1,0 +1,106 @@
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccIYFCk4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"init.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/init.c"
+  20              		.section	.text.GPIO_Ini,"ax",%progbits
+  21              		.align	1
+  22              		.global	GPIO_Ini
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	GPIO_Ini:
+  28              	.LFB0:
+   1:Core/Src/init.c **** #include "init.h"
+   2:Core/Src/init.c **** 
+   3:Core/Src/init.c **** void GPIO_Ini(void)
+   4:Core/Src/init.c **** {
+  29              		.loc 1 4 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+   5:Core/Src/init.c ****     // 1. Включение тактирования портов GPIOB и GPIOF
+   6:Core/Src/init.c ****     BIT_SET(RCC_AHB1ENR, RCC_GPIOB | RCC_GPIOF);
+  34              		.loc 1 6 5 view .LVU1
+  35 0000 0F4A     		ldr	r2, .L2
+  36 0002 D2F83038 		ldr	r3, [r2, #2096]
+  37 0006 43F02203 		orr	r3, r3, #34
+  38 000a C2F83038 		str	r3, [r2, #2096]
+   7:Core/Src/init.c **** 
+   8:Core/Src/init.c ****     // 2. Настройка светодиодов платы (PB0 - желтый/зеленый, 
+   9:Core/Src/init.c ****     // PB0 -> бит 0 (0x01), PB7 -> бит 14 (0x4000), PB14 -> бит 28 (0x10000000)
+  10:Core/Src/init.c ****     BIT_SET(GPIOB_MODER, 0x00000001UL | 0x00004000UL | 0x10000000UL);
+  39              		.loc 1 10 5 view .LVU2
+  40 000e 0D4B     		ldr	r3, .L2+4
+  41 0010 D3F80024 		ldr	r2, [r3, #1024]
+  42 0014 0C49     		ldr	r1, .L2+8
+  43 0016 0A43     		orrs	r2, r2, r1
+  44 0018 C3F80024 		str	r2, [r3, #1024]
+  11:Core/Src/init.c **** 
+  12:Core/Src/init.c ****     // Настройка скорости работы PB0, PB7, PB14 на среднюю
+  13:Core/Src/init.c ****     BIT_SET(GPIOB_OSPEEDR, 0x00000001UL | 0x00004000UL | 0x10000000UL);
+  45              		.loc 1 13 5 view .LVU3
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccIYFCk4.s 			page 2
+
+
+  46 001c D3F80824 		ldr	r2, [r3, #1032]
+  47 0020 0A43     		orrs	r2, r2, r1
+  48 0022 C3F80824 		str	r2, [r3, #1032]
+  14:Core/Src/init.c **** 
+  15:Core/Src/init.c ****     // 3. Изначально все порты PF0, PF1, PF2, PF3 настроены на ВХО�
+  16:Core/Src/init.c ****     BIT_SET(GPIOF_MODER, 0x00UL);
+  49              		.loc 1 16 5 view .LVU4
+  50 0026 03F58053 		add	r3, r3, #4096
+  51 002a D3F80024 		ldr	r2, [r3, #1024]
+  52 002e C3F80024 		str	r2, [r3, #1024]
+  17:Core/Src/init.c **** 
+  18:Core/Src/init.c ****     // Включаем подтяжку к земле (Pull-Down = 10b) для PF0, PF1, PF2, PF3:
+  19:Core/Src/init.c ****     // PF0 -> 0x02, PF1 -> 0x08, PF2 -> 0x20, PF3 -> 0x80 (в сумме 0xAA)
+  20:Core/Src/init.c ****     BIT_SET(GPIOF_PUPDR, 0x02UL | 0x08UL | 0x20UL | 0x80UL);
+  53              		.loc 1 20 5 view .LVU5
+  54 0032 D3F80C24 		ldr	r2, [r3, #1036]
+  55 0036 42F0AA02 		orr	r2, r2, #170
+  56 003a C3F80C24 		str	r2, [r3, #1036]
+  21:Core/Src/init.c **** }...
+  57              		.loc 1 21 1 is_stmt 0 view .LVU6
+  58 003e 7047     		bx	lr
+  59              	.L3:
+  60              		.align	2
+  61              	.L2:
+  62 0040 00300240 		.word	1073885184
+  63 0044 00000240 		.word	1073872896
+  64 0048 01400010 		.word	268451841
+  65              		.cfi_endproc
+  66              	.LFE0:
+  68              		.text
+  69              	.Letext0:
+  70              		.file 2 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/machine/_default_types.
+  71              		.file 3 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccIYFCk4.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 init.c
+C:\Users\user\AppData\Local\Temp\ccIYFCk4.s:21     .text.GPIO_Ini:00000000 $t
+C:\Users\user\AppData\Local\Temp\ccIYFCk4.s:27     .text.GPIO_Ini:00000000 GPIO_Ini
+C:\Users\user\AppData\Local\Temp\ccIYFCk4.s:62     .text.GPIO_Ini:00000040 $d
+
+NO UNDEFINED SYMBOLS
