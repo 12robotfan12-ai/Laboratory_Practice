@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "init.h"
 
 // Задержка для защиты от дребезга контактов кнопки
@@ -10,93 +9,88 @@ void delay(volatile uint32_t count)
 
 int main(void)
 {
-    GPIO_Ini(); // Инициализация портов GPIO
+    GPIO_Ini(); // Инициализация портов GPIO через CMSIS
 
-    uint8_t step = 0;     // Счётчик нажатий "нулевой" управляющей кнопки (PF0) (от 0 до 6)
+    uint8_t step = 0;     // Счётчик нажатий управляющей кнопки (PF0) (от 0 до 6)
     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
 
     while (1)
     {
-        // Считываем 0-й бит регистра GPIOF_IDR (пин PF0) через макрос BIT_READ
-        uint8_t btn0_now = BIT_READ(GPIOF_IDR, 0);
+        // Считываем состояние управляющей кнопки PF0 через макрос CMSIS READ_BIT
+        uint8_t btn0_now = (READ_BIT(GPIOF->IDR, GPIO_IDR_ID0) != 0U) ? 1U : 0U;
 
         // 1) Обработка нажатия управляющей кнопки (PF0)
-        if (btn0_now == 1 && btn0_old == 0)
+        if (btn0_now == 1U && btn0_old == 0U)
         {
             step++;
-            if (step >= 6)
+            if (step >= 6U)
             {
-                step = 0; // На 6-е нажатие возвращаемся к исходному режиму
+                step = 0U; // На 6-е нажатие цикл повторяется
             }
             delay(300000); // Пауза от дребезга контактов
         }
         btn0_old = btn0_now;
 
-        // Определяем активность внешних светодиодов в зависимости от шага (step):
-        // step == 1: горит 1-й внешний LED (PF7)
-        // step == 2: горят 1-й и 2-й внешние LED (PF7, PF8)
-        // step == 3: горят все 3 внешних LED (PF7, PF8, PF9)
-        // step == 4: все 3 канала работают от кнопок (внешние LED погашены)
-        // step == 5: горят все 3 внешних LED (PF7, PF8, PF9)
-        uint8_t ext1_active = (step == 1 || step == 2 || step == 3 || step == 5) ? 1 : 0;
-        uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
-        uint8_t ext3_active = (step == 3 || step == 5) ? 1 : 0;
+        // Флаги активности внешних светодиодов (PF7, PF8, PF9) по шагам:
+        uint8_t ext1_active = (step == 1U || step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+        uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+        uint8_t ext3_active = (step == 3U || step == 5U) ? 1U : 0U;
 
-        // 2) Работа 1-го канала (PF1 -> PB0 на плате или PF7 на макетке):
-        if (!ext1_active) // Режим работы от кнопки 1 (PF1)
+        // 2) Работа 1-го канала (Кнопка PF1 -> PB0 на плате / внешний LED на PF7):
+        if (!ext1_active) // Режим работы от кнопки PF1
         {
-            BIT_SET(GPIOF_BSRR, (1UL << 23)); // Гасим внешний светодиод 1 (PF7, сброс 16+7=23)
-            if (BIT_READ(GPIOF_IDR, 1) != 0)
+            WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BR7); // Гасим внешний светодиод 1 (PF7)
+            if (READ_BIT(GPIOF->IDR, GPIO_IDR_ID1) != 0U)
             {
-                BIT_SET(GPIOB_BSRR, (1UL << 0)); // Удерживается кнопка -> Зажигаем зеленый LED (PB0)
+                WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BS0); // Зажигаем зеленый LED на плате (PB0)
             }
             else
             {
-                BIT_SET(GPIOB_BSRR, (1UL << 16)); // Отпущена -> Гасим PB0
+                WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR0); // Гасим PB0
             }
         }
         else // Режим свечения внешнего светодиода 1 (PF7)
         {
-            BIT_SET(GPIOB_BSRR, (1UL << 16)); // Гасим светодиод на плате (PB0)
-            BIT_SET(GPIOF_BSRR, (1UL << 7));  // Зажигаем внешний светодиод на PF7
+            WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR0); // Гасим светодиод на плате (PB0)
+            WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BS7); // Зажигаем внешний светодиод 1 (PF7)
         }
 
-        // 3) Работа 2-го канала (PF2 -> PB7 на плате или PF8 на макетке):
-        if (!ext2_active) // Режим работы от кнопки 2 (PF2)
+        // 3) Работа 2-го канала (Кнопка PF2 -> PB7 на плате / внешний LED на PF8):
+        if (!ext2_active) // Режим работы от кнопки PF2
         {
-            BIT_SET(GPIOF_BSRR, (1UL << 24)); // Гасим внешний светодиод 2 (PF8, сброс 16+8=24)
-            if (BIT_READ(GPIOF_IDR, 2) != 0)
+            WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BR8); // Гасим внешний светодиод 2 (PF8)
+            if (READ_BIT(GPIOF->IDR, GPIO_IDR_ID2) != 0U)
             {
-                BIT_SET(GPIOB_BSRR, (1UL << 7)); // Удерживается кнопка -> Зажигаем синий LED (PB7)
+                WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BS7); // Зажигаем синий LED на плате (PB7)
             }
             else
             {
-                BIT_SET(GPIOB_BSRR, (1UL << 23)); // Отпущена -> Гасим PB7
+                WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR7); // Гасим PB7
             }
         }
         else // Режим свечения внешнего светодиода 2 (PF8)
         {
-            BIT_SET(GPIOB_BSRR, (1UL << 23)); // Гасим синий LED на плате (PB7)
-            BIT_SET(GPIOF_BSRR, (1UL << 8));  // Зажигаем внешний светодиод на PF8
+            WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR7); // Гасим синий LED на плате (PB7)
+            WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BS8); // Зажигаем внешний светодиод 2 (PF8)
         }
 
-        // 4) Работа 3-го канала (PF3 -> PB14 на плате или PF9 на макетке):
-        if (!ext3_active) // Режим работы от кнопки 3 (PF3)
+        // 4) Работа 3-го канала (Кнопка PF3 -> PB14 на плате / внешний LED на PF9):
+        if (!ext3_active) // Режим работы от кнопки PF3
         {
-            BIT_SET(GPIOF_BSRR, (1UL << 25)); // Гасим внешний светодиод 3 (PF9, сброс 16+9=25)
-            if (BIT_READ(GPIOF_IDR, 3) != 0)
+            WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BR9); // Гасим внешний светодиод 3 (PF9)
+            if (READ_BIT(GPIOF->IDR, GPIO_IDR_ID3) != 0U)
             {
-                BIT_SET(GPIOB_BSRR, (1UL << 14)); // Удерживается кнопка -> Зажигаем красный LED (PB14)
+                WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BS14); // Зажигаем красный LED на плате (PB14)
             }
             else
             {
-                BIT_SET(GPIOB_BSRR, (1UL << 30)); // Отпущена -> Гасим PB14
+                WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR14); // Гасим PB14
             }
         }
         else // Режим свечения внешнего светодиода 3 (PF9)
         {
-            BIT_SET(GPIOB_BSRR, (1UL << 30)); // Гасим красный LED на плате (PB14)
-            BIT_SET(GPIOF_BSRR, (1UL << 9));  // Зажигаем внешний светодиод на PF9
+            WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR14); // Гасим красный LED на плате (PB14)
+            WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BS9);  // Зажигаем внешний светодиод 3 (PF9)
         }
     }
 }

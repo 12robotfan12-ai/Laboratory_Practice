@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 1
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -28,47 +28,46 @@ ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 1
   25              		.thumb_func
   27              	delay:
   28              	.LVL0:
-  29              	.LFB0:
-   1:Core/Src/main.c **** #include <stdint.h>
-   2:Core/Src/main.c **** #include "init.h"
-   3:Core/Src/main.c **** 
-   4:Core/Src/main.c **** // Задержка для защиты от дребезга контактов кнопки
-   5:Core/Src/main.c **** void delay(volatile uint32_t count)
-   6:Core/Src/main.c **** {
-  30              		.loc 1 6 1 view -0
+  29              	.LFB130:
+   1:Core/Src/main.c **** #include "init.h"
+   2:Core/Src/main.c **** 
+   3:Core/Src/main.c **** // Задержка для защиты от дребезга контактов кнопки
+   4:Core/Src/main.c **** void delay(volatile uint32_t count)
+   5:Core/Src/main.c **** {
+  30              		.loc 1 5 1 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 8
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		@ link register save eliminated.
-  35              		.loc 1 6 1 is_stmt 0 view .LVU1
+  35              		.loc 1 5 1 is_stmt 0 view .LVU1
   36 0000 82B0     		sub	sp, sp, #8
   37              	.LCFI0:
   38              		.cfi_def_cfa_offset 8
   39 0002 0190     		str	r0, [sp, #4]
-   7:Core/Src/main.c ****     while (count--)
-  40              		.loc 1 7 5 is_stmt 1 view .LVU2
+   6:Core/Src/main.c ****     while (count--)
+  40              		.loc 1 6 5 is_stmt 1 view .LVU2
   41              	.L2:
-  42              		.loc 1 7 12 discriminator 1 view .LVU3
-  43              		.loc 1 7 17 is_stmt 0 discriminator 1 view .LVU4
+  42              		.loc 1 6 12 discriminator 1 view .LVU3
+  43              		.loc 1 6 17 is_stmt 0 discriminator 1 view .LVU4
   44 0004 019B     		ldr	r3, [sp, #4]
   45 0006 5A1E     		subs	r2, r3, #1
   46 0008 0192     		str	r2, [sp, #4]
-  47              		.loc 1 7 12 discriminator 1 view .LVU5
+  47              		.loc 1 6 12 discriminator 1 view .LVU5
   48 000a 002B     		cmp	r3, #0
   49 000c FAD1     		bne	.L2
-   8:Core/Src/main.c ****         ;
-   9:Core/Src/main.c **** }
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 2
+   7:Core/Src/main.c ****         ;
+   8:Core/Src/main.c **** }
+  50              		.loc 1 8 1 view .LVU6
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 2
 
 
-  50              		.loc 1 9 1 view .LVU6
   51 000e 02B0     		add	sp, sp, #8
   52              	.LCFI1:
   53              		.cfi_def_cfa_offset 0
   54              		@ sp needed
   55 0010 7047     		bx	lr
   56              		.cfi_endproc
-  57              	.LFE0:
+  57              	.LFE130:
   59              		.section	.text.main,"ax",%progbits
   60              		.align	1
   61              		.global	main
@@ -76,11 +75,11 @@ ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 1
   63              		.thumb
   64              		.thumb_func
   66              	main:
-  67              	.LFB1:
-  10:Core/Src/main.c **** 
-  11:Core/Src/main.c **** int main(void)
-  12:Core/Src/main.c **** {
-  68              		.loc 1 12 1 is_stmt 1 view -0
+  67              	.LFB131:
+   9:Core/Src/main.c **** 
+  10:Core/Src/main.c **** int main(void)
+  11:Core/Src/main.c **** {
+  68              		.loc 1 11 1 is_stmt 1 view -0
   69              		.cfi_startproc
   70              		@ args = 0, pretend = 0, frame = 0
   71              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -91,422 +90,385 @@ ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 1
   76              		.cfi_offset 4, -12
   77              		.cfi_offset 5, -8
   78              		.cfi_offset 14, -4
-  13:Core/Src/main.c ****     GPIO_Ini(); // Инициализация портов GPIO
-  79              		.loc 1 13 5 view .LVU8
+  12:Core/Src/main.c ****     GPIO_Ini(); // Инициализация портов GPIO через CMSIS
+  79              		.loc 1 12 5 view .LVU8
   80 0002 FFF7FEFF 		bl	GPIO_Ini
   81              	.LVL1:
-  14:Core/Src/main.c **** 
-  15:Core/Src/main.c ****     uint8_t step = 0;     // Счётчик нажатий "нулевой" управляющей 
-  82              		.loc 1 15 5 view .LVU9
-  16:Core/Src/main.c ****     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
-  83              		.loc 1 16 5 view .LVU10
-  84              		.loc 1 16 13 is_stmt 0 view .LVU11
-  85 0006 0025     		movs	r5, #0
+  13:Core/Src/main.c **** 
+  14:Core/Src/main.c ****     uint8_t step = 0;     // Счётчик нажатий управляющей кнопки (PF0
+  82              		.loc 1 14 5 view .LVU9
   15:Core/Src/main.c ****     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
-  86              		.loc 1 15 13 view .LVU12
+  83              		.loc 1 15 5 view .LVU10
+  84              		.loc 1 15 13 is_stmt 0 view .LVU11
+  85 0006 0025     		movs	r5, #0
+  14:Core/Src/main.c ****     uint8_t btn0_old = 0; // Предыдущее состояние кнопки 0 (PF0)
+  86              		.loc 1 14 13 view .LVU12
   87 0008 2B46     		mov	r3, r5
-  88 000a A1E0     		b	.L5
+  88 000a 68E0     		b	.L5
   89              	.LVL2:
   90              	.L30:
   91              	.LBB2:
-  17:Core/Src/main.c **** 
-  18:Core/Src/main.c ****     while (1)
-  19:Core/Src/main.c ****     {
-  20:Core/Src/main.c ****         // Считываем 0-й бит регистра GPIOF_IDR (пин PF0) через мак
-  21:Core/Src/main.c ****         uint8_t btn0_now = BIT_READ(GPIOF_IDR, 0);
-  22:Core/Src/main.c **** 
-  23:Core/Src/main.c ****         // 1) Обработка нажатия управляющей кнопки (PF0)
-  24:Core/Src/main.c ****         if (btn0_now == 1 && btn0_old == 0)
-  25:Core/Src/main.c ****         {
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 3
+  16:Core/Src/main.c **** 
+  17:Core/Src/main.c ****     while (1)
+  18:Core/Src/main.c ****     {
+  19:Core/Src/main.c ****         // Считываем состояние управляющей кнопки PF0 через
+  20:Core/Src/main.c ****         uint8_t btn0_now = (READ_BIT(GPIOF->IDR, GPIO_IDR_ID0) != 0U) ? 1U : 0U;
+  21:Core/Src/main.c **** 
+  22:Core/Src/main.c ****         // 1) Обработка нажатия управляющей кнопки (PF0)
+  23:Core/Src/main.c ****         if (btn0_now == 1U && btn0_old == 0U)
+  24:Core/Src/main.c ****         {
+  25:Core/Src/main.c ****             step++;
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 3
 
 
-  26:Core/Src/main.c ****             step++;
-  27:Core/Src/main.c ****             if (step >= 6)
-  28:Core/Src/main.c ****             {
-  29:Core/Src/main.c ****                 step = 0; // На 6-е нажатие возвращаемся к исходном�
-  30:Core/Src/main.c ****             }
-  31:Core/Src/main.c ****             delay(300000); // Пауза от дребезга контактов
-  32:Core/Src/main.c ****         }
-  33:Core/Src/main.c ****         btn0_old = btn0_now;
-  34:Core/Src/main.c **** 
-  35:Core/Src/main.c ****         // Определяем активность внешних светодиодов в за�
-  36:Core/Src/main.c ****         // step == 1: горит 1-й внешний LED (PF7)
-  37:Core/Src/main.c ****         // step == 2: горят 1-й и 2-й внешние LED (PF7, PF8)
-  38:Core/Src/main.c ****         // step == 3: горят все 3 внешних LED (PF7, PF8, PF9)
-  39:Core/Src/main.c ****         // step == 4: все 3 канала работают от кнопок (внешние LED 
-  40:Core/Src/main.c ****         // step == 5: горят все 3 внешних LED (PF7, PF8, PF9)
-  41:Core/Src/main.c ****         uint8_t ext1_active = (step == 1 || step == 2 || step == 3 || step == 5) ? 1 : 0;
-  92              		.loc 1 41 86 discriminator 3 view .LVU13
-  93 000c 0122     		movs	r2, #1
+  26:Core/Src/main.c ****             if (step >= 6U)
+  27:Core/Src/main.c ****             {
+  28:Core/Src/main.c ****                 step = 0U; // На 6-е нажатие цикл повторяется
+  29:Core/Src/main.c ****             }
+  30:Core/Src/main.c ****             delay(300000); // Пауза от дребезга контактов
+  31:Core/Src/main.c ****         }
+  32:Core/Src/main.c ****         btn0_old = btn0_now;
+  33:Core/Src/main.c **** 
+  34:Core/Src/main.c ****         // Флаги активности внешних светодиодов (PF7, PF8, PF9) п
+  35:Core/Src/main.c ****         uint8_t ext1_active = (step == 1U || step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+  92              		.loc 1 35 17 discriminator 3 view .LVU13
+  93 000c 0121     		movs	r1, #1
   94 000e 00E0     		b	.L8
   95              	.L21:
-  96 0010 0122     		movs	r2, #1
+  96 0010 0121     		movs	r1, #1
   97              	.L8:
-  98              		.loc 1 41 17 discriminator 6 view .LVU14
-  99 0012 D2B2     		uxtb	r2, r2
- 100              	.LVL3:
-  42:Core/Src/main.c ****         uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
- 101              		.loc 1 42 9 is_stmt 1 view .LVU15
- 102              		.loc 1 42 42 is_stmt 0 view .LVU16
- 103 0014 991E     		subs	r1, r3, #2
- 104 0016 C9B2     		uxtb	r1, r1
- 105              		.loc 1 42 73 view .LVU17
- 106 0018 0129     		cmp	r1, #1
- 107 001a 03D9     		bls	.L23
- 108              		.loc 1 42 73 discriminator 2 view .LVU18
- 109 001c 052B     		cmp	r3, #5
- 110 001e 21D0     		beq	.L24
- 111              		.loc 1 42 73 discriminator 4 view .LVU19
- 112 0020 0020     		movs	r0, #0
- 113 0022 00E0     		b	.L9
- 114              	.L23:
- 115              		.loc 1 42 73 discriminator 3 view .LVU20
- 116 0024 0120     		movs	r0, #1
- 117              	.L9:
- 118              		.loc 1 42 17 discriminator 6 view .LVU21
- 119 0026 C0B2     		uxtb	r0, r0
- 120              	.LVL4:
-  43:Core/Src/main.c ****         uint8_t ext3_active = (step == 3 || step == 5) ? 1 : 0;
- 121              		.loc 1 43 9 is_stmt 1 view .LVU22
- 122              		.loc 1 43 60 is_stmt 0 view .LVU23
- 123 0028 032B     		cmp	r3, #3
- 124 002a 1FD0     		beq	.L28
- 125              	.LVL5:
- 126              	.L10:
- 127              		.loc 1 43 60 discriminator 2 view .LVU24
- 128 002c 052B     		cmp	r3, #5
- 129 002e 1BD0     		beq	.L29
- 130              		.loc 1 43 60 discriminator 4 view .LVU25
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 4
+  98              	.LVL3:
+  36:Core/Src/main.c ****         uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+  99              		.loc 1 36 9 is_stmt 1 view .LVU14
+ 100              		.loc 1 36 43 is_stmt 0 view .LVU15
+ 101 0012 9A1E     		subs	r2, r3, #2
+ 102 0014 D2B2     		uxtb	r2, r2
+ 103              		.loc 1 36 17 view .LVU16
+ 104 0016 012A     		cmp	r2, #1
+ 105 0018 03D9     		bls	.L23
+ 106              		.loc 1 36 57 discriminator 2 view .LVU17
+ 107 001a 052B     		cmp	r3, #5
+ 108 001c 14D0     		beq	.L24
+ 109              		.loc 1 36 17 discriminator 4 view .LVU18
+ 110 001e 0022     		movs	r2, #0
+ 111 0020 00E0     		b	.L9
+ 112              	.L23:
+ 113              		.loc 1 36 17 discriminator 3 view .LVU19
+ 114 0022 0122     		movs	r2, #1
+ 115              	.L9:
+ 116              	.LVL4:
+  37:Core/Src/main.c ****         uint8_t ext3_active = (step == 3U || step == 5U) ? 1U : 0U;
+ 117              		.loc 1 37 9 is_stmt 1 view .LVU20
+ 118              		.loc 1 37 17 is_stmt 0 view .LVU21
+ 119 0024 032B     		cmp	r3, #3
+ 120 0026 13D0     		beq	.L28
+ 121              	.LVL5:
+ 122              	.L10:
+ 123              		.loc 1 37 43 discriminator 2 view .LVU22
+ 124 0028 052B     		cmp	r3, #5
+ 125 002a 0FD0     		beq	.L29
+ 126              		.loc 1 37 17 discriminator 4 view .LVU23
+ 127 002c 0020     		movs	r0, #0
+ 128              	.L11:
+ 129              	.LVL6:
+  38:Core/Src/main.c **** 
+  39:Core/Src/main.c ****         // 2) Работа 1-го канала (Кнопка PF1 -> PB0 на плате / внеш�
+  40:Core/Src/main.c ****         if (!ext1_active) // Режим работы от кнопки PF1
+ 130              		.loc 1 40 9 is_stmt 1 view .LVU24
+ 131              		.loc 1 40 12 is_stmt 0 view .LVU25
+ 132 002e B1B9     		cbnz	r1, .L12
+  41:Core/Src/main.c ****         {
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 4
 
 
- 131 0030 0021     		movs	r1, #0
- 132              	.L11:
- 133              		.loc 1 43 17 discriminator 6 view .LVU26
- 134 0032 C9B2     		uxtb	r1, r1
- 135              	.LVL6:
-  44:Core/Src/main.c **** 
-  45:Core/Src/main.c ****         // 2) Работа 1-го канала (PF1 -> PB0 на плате или PF7 на маке
-  46:Core/Src/main.c ****         if (!ext1_active) // Режим работы от кнопки 1 (PF1)
- 136              		.loc 1 46 9 is_stmt 1 view .LVU27
- 137              		.loc 1 46 12 is_stmt 0 view .LVU28
- 138 0034 22BB     		cbnz	r2, .L12
-  47:Core/Src/main.c ****         {
-  48:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 23)); // Гасим внешний светодиод 1 (PF
- 139              		.loc 1 48 13 is_stmt 1 view .LVU29
- 140 0036 02F18042 		add	r2, r2, #1073741824
- 141              	.LVL7:
- 142              		.loc 1 48 13 is_stmt 0 view .LVU30
- 143 003a 02F50432 		add	r2, r2, #135168
- 144              	.LVL8:
- 145              		.loc 1 48 13 view .LVU31
- 146 003e D2F81854 		ldr	r5, [r2, #1048]
- 147 0042 45F40005 		orr	r5, r5, #8388608
- 148 0046 C2F81854 		str	r5, [r2, #1048]
-  49:Core/Src/main.c ****             if (BIT_READ(GPIOF_IDR, 1) != 0)
- 149              		.loc 1 49 13 is_stmt 1 view .LVU32
- 150              		.loc 1 49 17 is_stmt 0 view .LVU33
- 151 004a D2F81024 		ldr	r2, [r2, #1040]
- 152              	.LVL9:
- 153              		.loc 1 49 16 view .LVU34
- 154 004e 12F0020F 		tst	r2, #2
- 155 0052 0DD0     		beq	.L13
-  50:Core/Src/main.c ****             {
-  51:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 0)); // Удерживается кнопка -> Заж
- 156              		.loc 1 51 17 is_stmt 1 view .LVU35
- 157 0054 4B4D     		ldr	r5, .L31
- 158 0056 D5F81824 		ldr	r2, [r5, #1048]
- 159 005a 42F00102 		orr	r2, r2, #1
- 160 005e C5F81824 		str	r2, [r5, #1048]
- 161 0062 1CE0     		b	.L14
- 162              	.LVL10:
- 163              	.L24:
-  42:Core/Src/main.c ****         uint8_t ext3_active = (step == 3 || step == 5) ? 1 : 0;
- 164              		.loc 1 42 17 is_stmt 0 discriminator 6 view .LVU36
- 165 0064 0120     		movs	r0, #1
- 166 0066 E1E7     		b	.L10
- 167              	.L29:
-  43:Core/Src/main.c **** 
- 168              		.loc 1 43 60 discriminator 3 view .LVU37
- 169 0068 0121     		movs	r1, #1
- 170 006a E2E7     		b	.L11
+  42:Core/Src/main.c ****             WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BR7); // Гасим внешний светодиод 
+ 133              		.loc 1 42 13 is_stmt 1 view .LVU26
+ 134 0030 3649     		ldr	r1, .L31
+ 135              	.LVL7:
+ 136              		.loc 1 42 13 is_stmt 0 view .LVU27
+ 137 0032 4FF40005 		mov	r5, #8388608
+ 138 0036 8D61     		str	r5, [r1, #24]
+  43:Core/Src/main.c ****             if (READ_BIT(GPIOF->IDR, GPIO_IDR_ID1) != 0U)
+ 139              		.loc 1 43 13 is_stmt 1 view .LVU28
+ 140              		.loc 1 43 17 is_stmt 0 view .LVU29
+ 141 0038 0969     		ldr	r1, [r1, #16]
+ 142              		.loc 1 43 16 view .LVU30
+ 143 003a 11F0020F 		tst	r1, #2
+ 144 003e 09D0     		beq	.L13
+  44:Core/Src/main.c ****             {
+  45:Core/Src/main.c ****                 WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BS0); // Зажигаем зеленый LED на 
+ 145              		.loc 1 45 17 is_stmt 1 view .LVU31
+ 146 0040 3349     		ldr	r1, .L31+4
+ 147 0042 0125     		movs	r5, #1
+ 148 0044 8D61     		str	r5, [r1, #24]
+ 149 0046 12E0     		b	.L14
+ 150              	.LVL8:
+ 151              	.L24:
+  36:Core/Src/main.c ****         uint8_t ext3_active = (step == 3U || step == 5U) ? 1U : 0U;
+ 152              		.loc 1 36 17 is_stmt 0 discriminator 3 view .LVU32
+ 153 0048 0122     		movs	r2, #1
+ 154 004a EDE7     		b	.L10
+ 155              	.L29:
+  37:Core/Src/main.c **** 
+ 156              		.loc 1 37 17 discriminator 3 view .LVU33
+ 157 004c 0120     		movs	r0, #1
+ 158 004e EEE7     		b	.L11
+ 159              	.LVL9:
+ 160              	.L28:
+  37:Core/Src/main.c **** 
+ 161              		.loc 1 37 17 discriminator 3 view .LVU34
+ 162 0050 0120     		movs	r0, #1
+ 163 0052 ECE7     		b	.L11
+ 164              	.LVL10:
+ 165              	.L13:
+  46:Core/Src/main.c ****             }
+  47:Core/Src/main.c ****             else
+  48:Core/Src/main.c ****             {
+  49:Core/Src/main.c ****                 WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR0); // Гасим PB0
+ 166              		.loc 1 49 17 is_stmt 1 view .LVU35
+ 167 0054 2E49     		ldr	r1, .L31+4
+ 168 0056 4FF48035 		mov	r5, #65536
+ 169 005a 8D61     		str	r5, [r1, #24]
+ 170 005c 07E0     		b	.L14
  171              	.LVL11:
- 172              	.L28:
-  43:Core/Src/main.c **** 
- 173              		.loc 1 43 60 discriminator 3 view .LVU38
- 174 006c 0121     		movs	r1, #1
- 175 006e E0E7     		b	.L11
- 176              	.LVL12:
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 5
+ 172              	.L12:
+  50:Core/Src/main.c ****             }
+  51:Core/Src/main.c ****         }
+  52:Core/Src/main.c ****         else // Режим свечения внешнего светодиода 1 (PF7)
+  53:Core/Src/main.c ****         {
+  54:Core/Src/main.c ****             WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR0); // Гасим светодиод на плате
+ 173              		.loc 1 54 13 view .LVU36
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 5
 
 
- 177              	.L13:
-  52:Core/Src/main.c ****             }
-  53:Core/Src/main.c ****             else
-  54:Core/Src/main.c ****             {
-  55:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 16)); // Отпущена -> Гасим PB0
- 178              		.loc 1 55 17 is_stmt 1 view .LVU39
- 179 0070 444D     		ldr	r5, .L31
- 180 0072 D5F81824 		ldr	r2, [r5, #1048]
- 181 0076 42F48032 		orr	r2, r2, #65536
- 182 007a C5F81824 		str	r2, [r5, #1048]
- 183 007e 0EE0     		b	.L14
- 184              	.LVL13:
- 185              	.L12:
-  56:Core/Src/main.c ****             }
-  57:Core/Src/main.c ****         }
-  58:Core/Src/main.c ****         else // Режим свечения внешнего светодиода 1 (PF7)
-  59:Core/Src/main.c ****         {
-  60:Core/Src/main.c ****             BIT_SET(GPIOB_BSRR, (1UL << 16)); // Гасим светодиод на плате (PB0
- 186              		.loc 1 60 13 view .LVU40
- 187 0080 404D     		ldr	r5, .L31
- 188 0082 D5F81824 		ldr	r2, [r5, #1048]
- 189              	.LVL14:
- 190              		.loc 1 60 13 is_stmt 0 view .LVU41
- 191 0086 42F48032 		orr	r2, r2, #65536
- 192 008a C5F81824 		str	r2, [r5, #1048]
-  61:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 7));  // Зажигаем внешний светодиод
- 193              		.loc 1 61 13 is_stmt 1 view .LVU42
- 194 008e 05F58055 		add	r5, r5, #4096
- 195 0092 D5F81824 		ldr	r2, [r5, #1048]
- 196 0096 42F08002 		orr	r2, r2, #128
- 197 009a C5F81824 		str	r2, [r5, #1048]
- 198              	.L14:
-  62:Core/Src/main.c ****         }
-  63:Core/Src/main.c **** 
-  64:Core/Src/main.c ****         // 3) Работа 2-го канала (PF2 -> PB7 на плате или PF8 на маке
-  65:Core/Src/main.c ****         if (!ext2_active) // Режим работы от кнопки 2 (PF2)
- 199              		.loc 1 65 9 view .LVU43
- 200              		.loc 1 65 12 is_stmt 0 view .LVU44
- 201 009e D8B9     		cbnz	r0, .L15
-  66:Core/Src/main.c ****         {
-  67:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 24)); // Гасим внешний светодиод 2 (PF
- 202              		.loc 1 67 13 is_stmt 1 view .LVU45
- 203 00a0 394A     		ldr	r2, .L31+4
- 204 00a2 D2F81804 		ldr	r0, [r2, #1048]
- 205 00a6 40F08070 		orr	r0, r0, #16777216
- 206 00aa C2F81804 		str	r0, [r2, #1048]
-  68:Core/Src/main.c ****             if (BIT_READ(GPIOF_IDR, 2) != 0)
- 207              		.loc 1 68 13 view .LVU46
- 208              		.loc 1 68 17 is_stmt 0 view .LVU47
- 209 00ae D2F81024 		ldr	r2, [r2, #1040]
- 210              		.loc 1 68 16 view .LVU48
- 211 00b2 12F0040F 		tst	r2, #4
- 212 00b6 07D0     		beq	.L16
-  69:Core/Src/main.c ****             {
-  70:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 7)); // Удерживается кнопка -> Заж
- 213              		.loc 1 70 17 is_stmt 1 view .LVU49
- 214 00b8 3248     		ldr	r0, .L31
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 6
+ 174 005e 2C49     		ldr	r1, .L31+4
+ 175              	.LVL12:
+ 176              		.loc 1 54 13 is_stmt 0 view .LVU37
+ 177 0060 4FF48035 		mov	r5, #65536
+ 178 0064 8D61     		str	r5, [r1, #24]
+  55:Core/Src/main.c ****             WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BS7); // Зажигаем внешний светод�
+ 179              		.loc 1 55 13 is_stmt 1 view .LVU38
+ 180 0066 01F58051 		add	r1, r1, #4096
+ 181 006a 8025     		movs	r5, #128
+ 182 006c 8D61     		str	r5, [r1, #24]
+ 183              	.L14:
+  56:Core/Src/main.c ****         }
+  57:Core/Src/main.c **** 
+  58:Core/Src/main.c ****         // 3) Работа 2-го канала (Кнопка PF2 -> PB7 на плате / внеш�
+  59:Core/Src/main.c ****         if (!ext2_active) // Режим работы от кнопки PF2
+ 184              		.loc 1 59 9 view .LVU39
+ 185              		.loc 1 59 12 is_stmt 0 view .LVU40
+ 186 006e 82B9     		cbnz	r2, .L15
+  60:Core/Src/main.c ****         {
+  61:Core/Src/main.c ****             WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BR8); // Гасим внешний светодиод 
+ 187              		.loc 1 61 13 is_stmt 1 view .LVU41
+ 188 0070 264A     		ldr	r2, .L31
+ 189 0072 4FF08071 		mov	r1, #16777216
+ 190 0076 9161     		str	r1, [r2, #24]
+  62:Core/Src/main.c ****             if (READ_BIT(GPIOF->IDR, GPIO_IDR_ID2) != 0U)
+ 191              		.loc 1 62 13 view .LVU42
+ 192              		.loc 1 62 17 is_stmt 0 view .LVU43
+ 193 0078 1269     		ldr	r2, [r2, #16]
+ 194              		.loc 1 62 16 view .LVU44
+ 195 007a 12F0040F 		tst	r2, #4
+ 196 007e 03D0     		beq	.L16
+  63:Core/Src/main.c ****             {
+  64:Core/Src/main.c ****                 WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BS7); // Зажигаем синий LED на пл
+ 197              		.loc 1 64 17 is_stmt 1 view .LVU45
+ 198 0080 234A     		ldr	r2, .L31+4
+ 199 0082 8021     		movs	r1, #128
+ 200 0084 9161     		str	r1, [r2, #24]
+ 201 0086 0DE0     		b	.L17
+ 202              	.L16:
+  65:Core/Src/main.c ****             }
+  66:Core/Src/main.c ****             else
+  67:Core/Src/main.c ****             {
+  68:Core/Src/main.c ****                 WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR7); // Гасим PB7
+ 203              		.loc 1 68 17 view .LVU46
+ 204 0088 214A     		ldr	r2, .L31+4
+ 205 008a 4FF40001 		mov	r1, #8388608
+ 206 008e 9161     		str	r1, [r2, #24]
+ 207 0090 08E0     		b	.L17
+ 208              	.L15:
+  69:Core/Src/main.c ****             }
+  70:Core/Src/main.c ****         }
+  71:Core/Src/main.c ****         else // Режим свечения внешнего светодиода 2 (PF8)
+  72:Core/Src/main.c ****         {
+  73:Core/Src/main.c ****             WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR7); // Гасим синий LED на плате (PB
+ 209              		.loc 1 73 13 view .LVU47
+ 210 0092 1F4A     		ldr	r2, .L31+4
+ 211 0094 4FF40001 		mov	r1, #8388608
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 6
 
 
- 215 00ba D0F81824 		ldr	r2, [r0, #1048]
- 216 00be 42F08002 		orr	r2, r2, #128
- 217 00c2 C0F81824 		str	r2, [r0, #1048]
- 218 00c6 16E0     		b	.L17
- 219              	.L16:
-  71:Core/Src/main.c ****             }
-  72:Core/Src/main.c ****             else
-  73:Core/Src/main.c ****             {
-  74:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 23)); // Отпущена -> Гасим PB7
- 220              		.loc 1 74 17 view .LVU50
- 221 00c8 2E48     		ldr	r0, .L31
- 222 00ca D0F81824 		ldr	r2, [r0, #1048]
- 223 00ce 42F40002 		orr	r2, r2, #8388608
- 224 00d2 C0F81824 		str	r2, [r0, #1048]
- 225 00d6 0EE0     		b	.L17
- 226              	.L15:
-  75:Core/Src/main.c ****             }
-  76:Core/Src/main.c ****         }
-  77:Core/Src/main.c ****         else // Режим свечения внешнего светодиода 2 (PF8)
-  78:Core/Src/main.c ****         {
-  79:Core/Src/main.c ****             BIT_SET(GPIOB_BSRR, (1UL << 23)); // Гасим синий LED на плате (PB7)
- 227              		.loc 1 79 13 view .LVU51
- 228 00d8 2A48     		ldr	r0, .L31
- 229 00da D0F81824 		ldr	r2, [r0, #1048]
- 230 00de 42F40002 		orr	r2, r2, #8388608
- 231 00e2 C0F81824 		str	r2, [r0, #1048]
-  80:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 8));  // Зажигаем внешний светодиод
- 232              		.loc 1 80 13 view .LVU52
- 233 00e6 00F58050 		add	r0, r0, #4096
- 234 00ea D0F81824 		ldr	r2, [r0, #1048]
- 235 00ee 42F48072 		orr	r2, r2, #256
- 236 00f2 C0F81824 		str	r2, [r0, #1048]
- 237              	.L17:
-  81:Core/Src/main.c ****         }
-  82:Core/Src/main.c **** 
-  83:Core/Src/main.c ****         // 4) Работа 3-го канала (PF3 -> PB14 на плате или PF9 на мак�
-  84:Core/Src/main.c ****         if (!ext3_active) // Режим работы от кнопки 3 (PF3)
- 238              		.loc 1 84 9 view .LVU53
- 239              		.loc 1 84 12 is_stmt 0 view .LVU54
- 240 00f6 D9B9     		cbnz	r1, .L18
-  85:Core/Src/main.c ****         {
-  86:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 25)); // Гасим внешний светодиод 3 (PF
- 241              		.loc 1 86 13 is_stmt 1 view .LVU55
- 242 00f8 234A     		ldr	r2, .L31+4
- 243 00fa D2F81814 		ldr	r1, [r2, #1048]
- 244              	.LVL15:
- 245              		.loc 1 86 13 is_stmt 0 view .LVU56
- 246 00fe 41F00071 		orr	r1, r1, #33554432
- 247 0102 C2F81814 		str	r1, [r2, #1048]
-  87:Core/Src/main.c ****             if (BIT_READ(GPIOF_IDR, 3) != 0)
- 248              		.loc 1 87 13 is_stmt 1 view .LVU57
- 249              		.loc 1 87 17 is_stmt 0 view .LVU58
- 250 0106 D2F81024 		ldr	r2, [r2, #1040]
- 251              		.loc 1 87 16 view .LVU59
- 252 010a 12F0080F 		tst	r2, #8
- 253 010e 07D0     		beq	.L19
-  88:Core/Src/main.c ****             {
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 7
+ 212 0098 9161     		str	r1, [r2, #24]
+  74:Core/Src/main.c ****             WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BS8); // Зажигаем внешний светод�
+ 213              		.loc 1 74 13 view .LVU48
+ 214 009a 02F58052 		add	r2, r2, #4096
+ 215 009e 4FF48071 		mov	r1, #256
+ 216 00a2 9161     		str	r1, [r2, #24]
+ 217              	.L17:
+  75:Core/Src/main.c ****         }
+  76:Core/Src/main.c **** 
+  77:Core/Src/main.c ****         // 4) Работа 3-го канала (Кнопка PF3 -> PB14 на плате / внеш
+  78:Core/Src/main.c ****         if (!ext3_active) // Режим работы от кнопки PF3
+ 218              		.loc 1 78 9 view .LVU49
+ 219              		.loc 1 78 12 is_stmt 0 view .LVU50
+ 220 00a4 88B9     		cbnz	r0, .L18
+  79:Core/Src/main.c ****         {
+  80:Core/Src/main.c ****             WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BR9); // Гасим внешний светодиод 
+ 221              		.loc 1 80 13 is_stmt 1 view .LVU51
+ 222 00a6 194A     		ldr	r2, .L31
+ 223 00a8 4FF00071 		mov	r1, #33554432
+ 224 00ac 9161     		str	r1, [r2, #24]
+  81:Core/Src/main.c ****             if (READ_BIT(GPIOF->IDR, GPIO_IDR_ID3) != 0U)
+ 225              		.loc 1 81 13 view .LVU52
+ 226              		.loc 1 81 17 is_stmt 0 view .LVU53
+ 227 00ae 1269     		ldr	r2, [r2, #16]
+ 228              		.loc 1 81 16 view .LVU54
+ 229 00b0 12F0080F 		tst	r2, #8
+ 230 00b4 04D0     		beq	.L19
+  82:Core/Src/main.c ****             {
+  83:Core/Src/main.c ****                 WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BS14); // Зажигаем красный LED на
+ 231              		.loc 1 83 17 is_stmt 1 view .LVU55
+ 232 00b6 164A     		ldr	r2, .L31+4
+ 233 00b8 4FF48041 		mov	r1, #16384
+ 234 00bc 9161     		str	r1, [r2, #24]
+ 235 00be 0DE0     		b	.L20
+ 236              	.L19:
+  84:Core/Src/main.c ****             }
+  85:Core/Src/main.c ****             else
+  86:Core/Src/main.c ****             {
+  87:Core/Src/main.c ****                 WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR14); // Гасим PB14
+ 237              		.loc 1 87 17 view .LVU56
+ 238 00c0 134A     		ldr	r2, .L31+4
+ 239 00c2 4FF08041 		mov	r1, #1073741824
+ 240 00c6 9161     		str	r1, [r2, #24]
+ 241 00c8 08E0     		b	.L20
+ 242              	.L18:
+  88:Core/Src/main.c ****             }
+  89:Core/Src/main.c ****         }
+  90:Core/Src/main.c ****         else // Режим свечения внешнего светодиода 3 (PF9)
+  91:Core/Src/main.c ****         {
+  92:Core/Src/main.c ****             WRITE_REG(GPIOB->BSRR, GPIO_BSRR_BR14); // Гасим красный LED на плат�
+ 243              		.loc 1 92 13 view .LVU57
+ 244 00ca 114A     		ldr	r2, .L31+4
+ 245 00cc 4FF08041 		mov	r1, #1073741824
+ 246 00d0 9161     		str	r1, [r2, #24]
+  93:Core/Src/main.c ****             WRITE_REG(GPIOF->BSRR, GPIO_BSRR_BS9);  // Зажигаем внешний светод
+ 247              		.loc 1 93 13 view .LVU58
+ 248 00d2 02F58052 		add	r2, r2, #4096
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 7
 
 
-  89:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 14)); // Удерживается кнопка -> За�
- 254              		.loc 1 89 17 is_stmt 1 view .LVU60
- 255 0110 1C49     		ldr	r1, .L31
- 256 0112 D1F81824 		ldr	r2, [r1, #1048]
- 257 0116 42F48042 		orr	r2, r2, #16384
- 258 011a C1F81824 		str	r2, [r1, #1048]
- 259 011e 16E0     		b	.L20
- 260              	.L19:
-  90:Core/Src/main.c ****             }
-  91:Core/Src/main.c ****             else
-  92:Core/Src/main.c ****             {
-  93:Core/Src/main.c ****                 BIT_SET(GPIOB_BSRR, (1UL << 30)); // Отпущена -> Гасим PB14
- 261              		.loc 1 93 17 view .LVU61
- 262 0120 1849     		ldr	r1, .L31
- 263 0122 D1F81824 		ldr	r2, [r1, #1048]
- 264 0126 42F08042 		orr	r2, r2, #1073741824
- 265 012a C1F81824 		str	r2, [r1, #1048]
- 266 012e 0EE0     		b	.L20
- 267              	.LVL16:
- 268              	.L18:
-  94:Core/Src/main.c ****             }
-  95:Core/Src/main.c ****         }
-  96:Core/Src/main.c ****         else // Режим свечения внешнего светодиода 3 (PF9)
-  97:Core/Src/main.c ****         {
-  98:Core/Src/main.c ****             BIT_SET(GPIOB_BSRR, (1UL << 30)); // Гасим красный LED на плате (PB1
- 269              		.loc 1 98 13 view .LVU62
- 270 0130 1449     		ldr	r1, .L31
- 271              	.LVL17:
- 272              		.loc 1 98 13 is_stmt 0 view .LVU63
- 273 0132 D1F81824 		ldr	r2, [r1, #1048]
- 274 0136 42F08042 		orr	r2, r2, #1073741824
- 275 013a C1F81824 		str	r2, [r1, #1048]
-  99:Core/Src/main.c ****             BIT_SET(GPIOF_BSRR, (1UL << 9));  // Зажигаем внешний светодиод
- 276              		.loc 1 99 13 is_stmt 1 view .LVU64
- 277 013e 01F58051 		add	r1, r1, #4096
- 278 0142 D1F81824 		ldr	r2, [r1, #1048]
- 279 0146 42F40072 		orr	r2, r2, #512
- 280 014a C1F81824 		str	r2, [r1, #1048]
- 281              	.L20:
- 282              	.LBE2:
-  12:Core/Src/main.c ****     GPIO_Ini(); // Инициализация портов GPIO
- 283              		.loc 1 12 1 is_stmt 0 view .LVU65
- 284 014e 2546     		mov	r5, r4
+ 249 00d6 4FF40071 		mov	r1, #512
+ 250 00da 9161     		str	r1, [r2, #24]
+ 251              	.L20:
+ 252              	.LBE2:
+  11:Core/Src/main.c ****     GPIO_Ini(); // Инициализация портов GPIO через CMSIS
+ 253              		.loc 1 11 1 is_stmt 0 view .LVU59
+ 254 00dc 2546     		mov	r5, r4
+ 255              	.LVL13:
+ 256              	.L5:
+  17:Core/Src/main.c ****     {
+ 257              		.loc 1 17 5 is_stmt 1 view .LVU60
+ 258              	.LBB3:
+  20:Core/Src/main.c **** 
+ 259              		.loc 1 20 9 view .LVU61
+  20:Core/Src/main.c **** 
+ 260              		.loc 1 20 29 is_stmt 0 view .LVU62
+ 261 00de 0B4A     		ldr	r2, .L31
+ 262 00e0 1469     		ldr	r4, [r2, #16]
+ 263              	.LVL14:
+  23:Core/Src/main.c ****         {
+ 264              		.loc 1 23 9 is_stmt 1 view .LVU63
+  23:Core/Src/main.c ****         {
+ 265              		.loc 1 23 12 is_stmt 0 view .LVU64
+ 266 00e2 14F00104 		ands	r4, r4, #1
+ 267              	.LVL15:
+  23:Core/Src/main.c ****         {
+ 268              		.loc 1 23 12 view .LVU65
+ 269 00e6 09D0     		beq	.L6
+  23:Core/Src/main.c ****         {
+ 270              		.loc 1 23 28 discriminator 1 view .LVU66
+ 271 00e8 45B9     		cbnz	r5, .L6
+  25:Core/Src/main.c ****             if (step >= 6U)
+ 272              		.loc 1 25 13 is_stmt 1 view .LVU67
+  25:Core/Src/main.c ****             if (step >= 6U)
+ 273              		.loc 1 25 17 is_stmt 0 view .LVU68
+ 274 00ea 0133     		adds	r3, r3, #1
+ 275              	.LVL16:
+  25:Core/Src/main.c ****             if (step >= 6U)
+ 276              		.loc 1 25 17 view .LVU69
+ 277 00ec DBB2     		uxtb	r3, r3
+ 278              	.LVL17:
+  26:Core/Src/main.c ****             {
+ 279              		.loc 1 26 13 is_stmt 1 view .LVU70
+  26:Core/Src/main.c ****             {
+ 280              		.loc 1 26 16 is_stmt 0 view .LVU71
+ 281 00ee 052B     		cmp	r3, #5
+ 282 00f0 00D8     		bhi	.L7
+  25:Core/Src/main.c ****             if (step >= 6U)
+ 283              		.loc 1 25 17 view .LVU72
+ 284 00f2 1D46     		mov	r5, r3
  285              	.LVL18:
- 286              	.L5:
-  18:Core/Src/main.c ****     {
- 287              		.loc 1 18 5 is_stmt 1 view .LVU66
- 288              	.LBB3:
-  21:Core/Src/main.c **** 
- 289              		.loc 1 21 9 view .LVU67
-  21:Core/Src/main.c **** 
- 290              		.loc 1 21 28 is_stmt 0 view .LVU68
- 291 0150 0D4A     		ldr	r2, .L31+4
- 292 0152 D2F81044 		ldr	r4, [r2, #1040]
- 293              	.LVL19:
-  24:Core/Src/main.c ****         {
- 294              		.loc 1 24 9 is_stmt 1 view .LVU69
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 8
+ 286              	.L7:
+  30:Core/Src/main.c ****         }
+ 287              		.loc 1 30 13 is_stmt 1 view .LVU73
+ 288 00f4 0748     		ldr	r0, .L31+8
+ 289 00f6 FFF7FEFF 		bl	delay
+ 290              	.LVL19:
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 8
 
 
-  24:Core/Src/main.c ****         {
- 295              		.loc 1 24 12 is_stmt 0 view .LVU70
- 296 0156 14F00104 		ands	r4, r4, #1
- 297              	.LVL20:
-  24:Core/Src/main.c ****         {
- 298              		.loc 1 24 12 view .LVU71
- 299 015a 09D0     		beq	.L6
-  24:Core/Src/main.c ****         {
- 300              		.loc 1 24 27 discriminator 1 view .LVU72
- 301 015c 45B9     		cbnz	r5, .L6
-  26:Core/Src/main.c ****             if (step >= 6)
- 302              		.loc 1 26 13 is_stmt 1 view .LVU73
-  26:Core/Src/main.c ****             if (step >= 6)
- 303              		.loc 1 26 17 is_stmt 0 view .LVU74
- 304 015e 0133     		adds	r3, r3, #1
- 305              	.LVL21:
-  26:Core/Src/main.c ****             if (step >= 6)
- 306              		.loc 1 26 17 view .LVU75
- 307 0160 DBB2     		uxtb	r3, r3
- 308              	.LVL22:
-  27:Core/Src/main.c ****             {
- 309              		.loc 1 27 13 is_stmt 1 view .LVU76
-  27:Core/Src/main.c ****             {
- 310              		.loc 1 27 16 is_stmt 0 view .LVU77
- 311 0162 052B     		cmp	r3, #5
- 312 0164 00D8     		bhi	.L7
-  26:Core/Src/main.c ****             if (step >= 6)
- 313              		.loc 1 26 17 view .LVU78
- 314 0166 1D46     		mov	r5, r3
- 315              	.LVL23:
- 316              	.L7:
-  31:Core/Src/main.c ****         }
- 317              		.loc 1 31 13 is_stmt 1 view .LVU79
- 318 0168 0848     		ldr	r0, .L31+8
- 319 016a FFF7FEFF 		bl	delay
- 320              	.LVL24:
- 321 016e 2B46     		mov	r3, r5
- 322              	.LVL25:
- 323              	.L6:
-  33:Core/Src/main.c **** 
- 324              		.loc 1 33 9 view .LVU80
-  41:Core/Src/main.c ****         uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
- 325              		.loc 1 41 9 view .LVU81
-  41:Core/Src/main.c ****         uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
- 326              		.loc 1 41 55 is_stmt 0 view .LVU82
- 327 0170 5A1E     		subs	r2, r3, #1
- 328 0172 D2B2     		uxtb	r2, r2
-  41:Core/Src/main.c ****         uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
- 329              		.loc 1 41 86 view .LVU83
- 330 0174 022A     		cmp	r2, #2
- 331 0176 7FF64BAF 		bls	.L21
-  41:Core/Src/main.c ****         uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
- 332              		.loc 1 41 86 discriminator 2 view .LVU84
- 333 017a 052B     		cmp	r3, #5
- 334 017c 3FF446AF 		beq	.L30
-  41:Core/Src/main.c ****         uint8_t ext2_active = (step == 2 || step == 3 || step == 5) ? 1 : 0;
- 335              		.loc 1 41 86 discriminator 4 view .LVU85
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 9
-
-
- 336 0180 0022     		movs	r2, #0
- 337 0182 46E7     		b	.L8
- 338              	.L32:
- 339              		.align	2
- 340              	.L31:
- 341 0184 00000240 		.word	1073872896
- 342 0188 00100240 		.word	1073876992
- 343 018c E0930400 		.word	300000
- 344              	.LBE3:
- 345              		.cfi_endproc
- 346              	.LFE1:
- 348              		.text
- 349              	.Letext0:
- 350              		.file 2 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/machine/_default_types.
- 351              		.file 3 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/sys/_stdint.h"
- 352              		.file 4 "Core/Inc/init.h"
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc82fv9L.s 			page 10
+ 291 00fa 2B46     		mov	r3, r5
+ 292              	.LVL20:
+ 293              	.L6:
+  32:Core/Src/main.c **** 
+ 294              		.loc 1 32 9 view .LVU74
+  35:Core/Src/main.c ****         uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+ 295              		.loc 1 35 9 view .LVU75
+  35:Core/Src/main.c ****         uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+ 296              		.loc 1 35 57 is_stmt 0 view .LVU76
+ 297 00fc 5A1E     		subs	r2, r3, #1
+ 298 00fe D2B2     		uxtb	r2, r2
+  35:Core/Src/main.c ****         uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+ 299              		.loc 1 35 17 view .LVU77
+ 300 0100 022A     		cmp	r2, #2
+ 301 0102 85D9     		bls	.L21
+  35:Core/Src/main.c ****         uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+ 302              		.loc 1 35 71 discriminator 2 view .LVU78
+ 303 0104 052B     		cmp	r3, #5
+ 304 0106 81D0     		beq	.L30
+  35:Core/Src/main.c ****         uint8_t ext2_active = (step == 2U || step == 3U || step == 5U) ? 1U : 0U;
+ 305              		.loc 1 35 17 discriminator 4 view .LVU79
+ 306 0108 0021     		movs	r1, #0
+ 307 010a 82E7     		b	.L8
+ 308              	.L32:
+ 309              		.align	2
+ 310              	.L31:
+ 311 010c 00140240 		.word	1073878016
+ 312 0110 00040240 		.word	1073873920
+ 313 0114 E0930400 		.word	300000
+ 314              	.LBE3:
+ 315              		.cfi_endproc
+ 316              	.LFE131:
+ 318              		.text
+ 319              	.Letext0:
+ 320              		.file 2 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/machine/_default_types.
+ 321              		.file 3 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/sys/_stdint.h"
+ 322              		.file 4 "CMSIS/Devices/STM32F4xx/Inc/STM32F429xx/stm32f429xx.h"
+ 323              		.file 5 "Core/Inc/init.h"
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccSGqk9D.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\user\AppData\Local\Temp\cc82fv9L.s:21     .text.delay:00000000 $t
-C:\Users\user\AppData\Local\Temp\cc82fv9L.s:27     .text.delay:00000000 delay
-C:\Users\user\AppData\Local\Temp\cc82fv9L.s:60     .text.main:00000000 $t
-C:\Users\user\AppData\Local\Temp\cc82fv9L.s:66     .text.main:00000000 main
-C:\Users\user\AppData\Local\Temp\cc82fv9L.s:341    .text.main:00000184 $d
+C:\Users\user\AppData\Local\Temp\ccSGqk9D.s:21     .text.delay:00000000 $t
+C:\Users\user\AppData\Local\Temp\ccSGqk9D.s:27     .text.delay:00000000 delay
+C:\Users\user\AppData\Local\Temp\ccSGqk9D.s:60     .text.main:00000000 $t
+C:\Users\user\AppData\Local\Temp\ccSGqk9D.s:66     .text.main:00000000 main
+C:\Users\user\AppData\Local\Temp\ccSGqk9D.s:311    .text.main:0000010c $d
 
 UNDEFINED SYMBOLS
 GPIO_Ini
