@@ -2,91 +2,33 @@
 
 void GPIO_Ini(void)
 {
-    // 1. Включение тактирования портов GPIOB и GPIOF
-    BIT_SET(RCC_AHB1ENR, RCC_GPIOB | RCC_GPIOF);
+    // 1. Включение тактирования портов GPIOB (бит 1 = 0x02) и GPIOF (бит 5 = 0x20)
+    // Адрес RCC_AHB1ENR = 0x40023800 + 0x30 = 0x40023830
+    (*(volatile uint32_t *)0x40023830UL) |= 0x22UL;
 
-    // 2. Светодиоды на плате (PB0, PB7, PB14) на ВЫХОД (01b)
-    BIT_CLEAR(GPIOB_MODER, (3UL << 0) | (3UL << 14) | (3UL << 28));
-    BIT_SET(GPIOB_MODER, (1UL << 0) | (1UL << 14) | (1UL << 28));
-    BIT_SET(GPIOB_OSPEEDR, (1UL << 0) | (1UL << 14) | (1UL << 28));
-    // Гасим светодиоды платы при старте
-    GPIOB_BSRR = (1UL << 16) | (1UL << 23) | (1UL << 30);
+    // 2. Настройка светодиодов на плате (PB0, PB7, PB14) на ВЫХОД (01b)
+    // Адрес GPIOB_MODER = 0x40020400 + 0x00
+    // PB0 -> бит 0 (0x01), PB7 -> бит 14 (0x4000), PB14 -> бит 28 (0x10000000)
+    (*(volatile uint32_t *)0x40020400UL) &= ~(0x3000C003UL);
+    (*(volatile uint32_t *)0x40020400UL) |= 0x10004001UL;
 
-    // 3. Порт F:
-    // Пины кнопок PF0, PF1, PF2, PF3 настраиваем на ВХОД (00b)
-    BIT_CLEAR(GPIOF_MODER, 0x000000FFUL);
+    // Средняя скорость работы для PB0, PB7, PB14 (GPIOB_OSPEEDR = 0x40020408)
+    (*(volatile uint32_t *)0x40020408UL) |= 0x10004001UL;
 
-    // Включаем внутреннюю подтяжку к земле (Pull-Down = 10b) для кнопок PF0..PF3:
-    // PF0 (бит 1), PF1 (бит 3), PF2 (бит 5), PF3 (бит 7) -> маска 0xAA
-    BIT_CLEAR(GPIOF_PUPDR, 0x000000FFUL);
-    BIT_SET(GPIOF_PUPDR, 0x000000AAUL);
+    // Гасим светодиоды платы при старте (GPIOB_BSRR = 0x40020418)
+    (*(volatile uint32_t *)0x40020418UL) = (1UL << 16) | (1UL << 23) | (1UL << 30);
 
-    // Пины внешних светодиодов PF7, PF8, PF9 настраиваем на ВЫХОД (01b)
-    // PF7 (биты 15:14 -> 01b, сдвиг 14)
-    // PF8 (биты 17:16 -> 01b, сдвиг 16)
-    // PF9 (биты 19:18 -> 01b, сдвиг 18)
-    BIT_CLEAR(GPIOF_MODER, (3UL << 14) | (3UL << 16) | (3UL << 18));
-    BIT_SET(GPIOF_MODER, (1UL << 14) | (1UL << 16) | (1UL << 18));
-    BIT_SET(GPIOF_OSPEEDR, (1UL << 14) | (1UL << 16) | (1UL << 18));
+    // 3. Настройка порта GPIOF (базовый адрес 0x40021400):
+    // Кнопки PF0, PF1, PF2, PF3 -> на ВХОД (00b в младших 8 битах GPIOF_MODER)
+    // Внешние светодиоды PF7, PF8, PF9 -> на ВЫХОД (01b в битах 14, 16, 18 GPIOF_MODER)
+    (*(volatile uint32_t *)0x40021400UL) &= ~(0x000FC0FFUL);
+    (*(volatile uint32_t *)0x40021400UL) |= 0x00054000UL;
 
-    // Гасим внешние светодиоды при старте (сброс PF7..PF9 через BSRR: биты 16+7, 16+8, 16+9)
-    GPIOF_BSRR = (1UL << 23) | (1UL << 24) | (1UL << 25);
-}
+    // Подтяжка к земле (Pull-Down = 10b) для кнопок PF0..PF3 (GPIOF_PUPDR = 0x4002140C)
+    // PF0 -> 0x02, PF1 -> 0x08, PF2 -> 0x20, PF3 -> 0x80 (в сумме 0xAA)
+    (*(volatile uint32_t *)0x4002140CUL) &= ~(0x000000FFUL);
+    (*(volatile uint32_t *)0x4002140CUL) |= 0x000000AAUL;
 
-// Управление 6 светодиодами в линии (индексы 0..5):
-// 0 -> PB0 (LED1 на плате, зеленый)
-// 1 -> PB7 (LED2 на плате, синий)
-// 2 -> PB14 (LED3 на плате, красный)
-// 3 -> PF7 (LED4 на макетке, CN9 пин 26)
-// 4 -> PF8 (LED5 на макетке, CN9 пин 24)
-// 5 -> PF9 (LED6 на макетке, CN9 пин 28)
-void LED_SetState(uint8_t led_idx, uint8_t state)
-{
-    switch (led_idx)
-    {
-    case 0: // PB0 на плате
-        if (state)
-            GPIOB_BSRR = (1UL << 0);
-        else
-            GPIOB_BSRR = (1UL << 16);
-        break;
-
-    case 1: // PB7 на плате
-        if (state)
-            GPIOB_BSRR = (1UL << 7);
-        else
-            GPIOB_BSRR = (1UL << 23);
-        break;
-
-    case 2: // PB14 на плате
-        if (state)
-            GPIOB_BSRR = (1UL << 14);
-        else
-            GPIOB_BSRR = (1UL << 30);
-        break;
-
-    case 3: // PF7 на макетке (CN9, пин 26)
-        if (state)
-            GPIOF_BSRR = (1UL << 7);
-        else
-            GPIOF_BSRR = (1UL << 23);
-        break;
-
-    case 4: // PF8 на макетке (CN9, пин 24)
-        if (state)
-            GPIOF_BSRR = (1UL << 8);
-        else
-            GPIOF_BSRR = (1UL << 24);
-        break;
-
-    case 5: // PF9 на макетке (CN9, пин 28)
-        if (state)
-            GPIOF_BSRR = (1UL << 9);
-        else
-            GPIOF_BSRR = (1UL << 25);
-        break;
-
-    default:
-        break;
-    }
+    // Гасим внешние светодиоды PF7, PF8, PF9 при старте (GPIOF_BSRR = 0x40021418)
+    (*(volatile uint32_t *)0x40021418UL) = (1UL << 23) | (1UL << 24) | (1UL << 25);
 }
