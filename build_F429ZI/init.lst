@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc9DQSAT.s 			page 1
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccMVZgzW.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -37,127 +37,118 @@ ARM GAS  C:\Users\user\AppData\Local\Temp\cc9DQSAT.s 			page 1
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
-   5:Core/Src/init.c ****     // 1. Включение тактирования портов GPIOB (бит 1 = 0x02) и GPIOF
-   6:Core/Src/init.c ****     // Адрес RCC_AHB1ENR = 0x40023800 + 0x30 = 0x40023830
-   7:Core/Src/init.c ****     (*(volatile uint32_t *)0x40023830UL) |= 0x22UL;
-  34              		.loc 1 7 5 view .LVU1
-  35              		.loc 1 7 6 is_stmt 0 view .LVU2
-  36 0000 1E4A     		ldr	r2, .L2
-  37 0002 D2F83038 		ldr	r3, [r2, #2096]
-  38              		.loc 1 7 42 view .LVU3
-  39 0006 43F02203 		orr	r3, r3, #34
-  40 000a C2F83038 		str	r3, [r2, #2096]
-   8:Core/Src/init.c **** 
-   9:Core/Src/init.c ****     // 2. Настройка светодиодов на плате (PB0, PB7, PB14) на ВЫХО�
-  10:Core/Src/init.c ****     // Адрес GPIOB_MODER = 0x40020400 + 0x00
-  11:Core/Src/init.c ****     // PB0 -> бит 0 (0x01), PB7 -> бит 14 (0x4000), PB14 -> бит 28 (0x10000000)
-  12:Core/Src/init.c ****     (*(volatile uint32_t *)0x40020400UL) &= ~(0x3000C003UL);
-  41              		.loc 1 12 5 is_stmt 1 view .LVU4
-  42              		.loc 1 12 6 is_stmt 0 view .LVU5
-  43 000e 1C4B     		ldr	r3, .L2+4
-  44 0010 D3F80014 		ldr	r1, [r3, #1024]
-  45              		.loc 1 12 42 view .LVU6
-  46 0014 1B4A     		ldr	r2, .L2+8
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc9DQSAT.s 			page 2
+   5:Core/Src/init.c ****     // 1. Включение тактирования портов GPIOB и GPIOF через мак
+   6:Core/Src/init.c ****     BIT_SET(RCC_AHB1ENR, RCC_GPIOB | RCC_GPIOF);
+  34              		.loc 1 6 5 view .LVU1
+  35 0000 264A     		ldr	r2, .L2
+  36 0002 D2F83038 		ldr	r3, [r2, #2096]
+  37 0006 43F02203 		orr	r3, r3, #34
+  38 000a C2F83038 		str	r3, [r2, #2096]
+   7:Core/Src/init.c **** 
+   8:Core/Src/init.c ****     // 2. Настройка светодиодов платы (PB0 - зеленый, PB7 - син�
+   9:Core/Src/init.c ****     BIT_CLEAR(GPIOB_MODER, (3UL << 0) | (3UL << 14) | (3UL << 28));
+  39              		.loc 1 9 5 view .LVU2
+  40 000e 244B     		ldr	r3, .L2+4
+  41 0010 D3F80014 		ldr	r1, [r3, #1024]
+  42 0014 234A     		ldr	r2, .L2+8
+  43 0016 0A40     		ands	r2, r2, r1
+  44 0018 C3F80024 		str	r2, [r3, #1024]
+  10:Core/Src/init.c ****     BIT_SET(GPIOB_MODER, (1UL << 0) | (1UL << 14) | (1UL << 28));
+  45              		.loc 1 10 5 view .LVU3
+  46 001c D3F80024 		ldr	r2, [r3, #1024]
+  47 0020 2149     		ldr	r1, .L2+12
+  48 0022 0A43     		orrs	r2, r2, r1
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccMVZgzW.s 			page 2
 
 
-  47 0016 0A40     		ands	r2, r2, r1
-  48 0018 C3F80024 		str	r2, [r3, #1024]
-  13:Core/Src/init.c ****     (*(volatile uint32_t *)0x40020400UL) |= 0x10004001UL;
-  49              		.loc 1 13 5 is_stmt 1 view .LVU7
-  50              		.loc 1 13 6 is_stmt 0 view .LVU8
-  51 001c D3F80024 		ldr	r2, [r3, #1024]
-  52              		.loc 1 13 42 view .LVU9
-  53 0020 1949     		ldr	r1, .L2+12
-  54 0022 0A43     		orrs	r2, r2, r1
-  55 0024 C3F80024 		str	r2, [r3, #1024]
+  49 0024 C3F80024 		str	r2, [r3, #1024]
+  11:Core/Src/init.c **** 
+  12:Core/Src/init.c ****     // Настройка скорости работы PB0, PB7, PB14 на среднюю
+  13:Core/Src/init.c ****     BIT_SET(GPIOB_OSPEEDR, (1UL << 0) | (1UL << 14) | (1UL << 28));
+  50              		.loc 1 13 5 view .LVU4
+  51 0028 D3F80824 		ldr	r2, [r3, #1032]
+  52 002c 0A43     		orrs	r2, r2, r1
+  53 002e C3F80824 		str	r2, [r3, #1032]
   14:Core/Src/init.c **** 
-  15:Core/Src/init.c ****     // Средняя скорость работы для PB0, PB7, PB14 (GPIOB_OSPEEDR = 0x400204
-  16:Core/Src/init.c ****     (*(volatile uint32_t *)0x40020408UL) |= 0x10004001UL;
-  56              		.loc 1 16 5 is_stmt 1 view .LVU10
-  57              		.loc 1 16 6 is_stmt 0 view .LVU11
-  58 0028 D3F80824 		ldr	r2, [r3, #1032]
-  59              		.loc 1 16 42 view .LVU12
-  60 002c 0A43     		orrs	r2, r2, r1
-  61 002e C3F80824 		str	r2, [r3, #1032]
+  15:Core/Src/init.c ****     // Гасим светодиоды платы при старте
+  16:Core/Src/init.c ****     BIT_SET(GPIOB_BSRR, (1UL << 16) | (1UL << 23) | (1UL << 30));
+  54              		.loc 1 16 5 view .LVU5
+  55 0032 D3F81824 		ldr	r2, [r3, #1048]
+  56 0036 42F08142 		orr	r2, r2, #1082130432
+  57 003a 42F48032 		orr	r2, r2, #65536
+  58 003e C3F81824 		str	r2, [r3, #1048]
   17:Core/Src/init.c **** 
-  18:Core/Src/init.c ****     // Гасим светодиоды платы при старте (GPIOB_BSRR = 0x40020418)
-  19:Core/Src/init.c ****     (*(volatile uint32_t *)0x40020418UL) = (1UL << 16) | (1UL << 23) | (1UL << 30);
-  62              		.loc 1 19 5 is_stmt 1 view .LVU13
-  63              		.loc 1 19 42 is_stmt 0 view .LVU14
-  64 0032 164A     		ldr	r2, .L2+16
-  65 0034 C3F81824 		str	r2, [r3, #1048]
-  20:Core/Src/init.c **** 
-  21:Core/Src/init.c ****     // 3. Настройка порта GPIOF (базовый адрес 0x40021400):
-  22:Core/Src/init.c ****     // Кнопки PF0, PF1, PF2, PF3 -> на ВХОД (00b в младших 8 битах GPIOF_M
-  23:Core/Src/init.c ****     // Внешние светодиоды PF7, PF8, PF9 -> на ВЫХОД (01b в битах 14, 
-  24:Core/Src/init.c ****     (*(volatile uint32_t *)0x40021400UL) &= ~(0x000FC0FFUL);
-  66              		.loc 1 24 5 is_stmt 1 view .LVU15
-  67              		.loc 1 24 6 is_stmt 0 view .LVU16
-  68 0038 03F58053 		add	r3, r3, #4096
-  69 003c D3F80024 		ldr	r2, [r3, #1024]
-  70              		.loc 1 24 42 view .LVU17
-  71 0040 22F47C22 		bic	r2, r2, #1032192
-  72 0044 22F0FF02 		bic	r2, r2, #255
-  73 0048 C3F80024 		str	r2, [r3, #1024]
-  25:Core/Src/init.c ****     (*(volatile uint32_t *)0x40021400UL) |= 0x00054000UL;
-  74              		.loc 1 25 5 is_stmt 1 view .LVU18
-  75              		.loc 1 25 6 is_stmt 0 view .LVU19
-  76 004c D3F80024 		ldr	r2, [r3, #1024]
-  77              		.loc 1 25 42 view .LVU20
-  78 0050 42F4A822 		orr	r2, r2, #344064
-  79 0054 C3F80024 		str	r2, [r3, #1024]
+  18:Core/Src/init.c ****     // 3. Настройка порта GPIOF:
+  19:Core/Src/init.c ****     // Пины кнопок PF0, PF1, PF2, PF3 -> на ВХОД (00b)
+  20:Core/Src/init.c ****     BIT_CLEAR(GPIOF_MODER, 0x000000FFUL);
+  59              		.loc 1 20 5 view .LVU6
+  60 0042 03F58053 		add	r3, r3, #4096
+  61 0046 D3F80024 		ldr	r2, [r3, #1024]
+  62 004a 22F0FF02 		bic	r2, r2, #255
+  63 004e C3F80024 		str	r2, [r3, #1024]
+  21:Core/Src/init.c **** 
+  22:Core/Src/init.c ****     // Подтяжка к земле (Pull-Down = 10b) для PF0, PF1, PF2, PF3:
+  23:Core/Src/init.c ****     // PF0 -> 0x02, PF1 -> 0x08, PF2 -> 0x20, PF3 -> 0x80 (в сумме 0xAA)
+  24:Core/Src/init.c ****     BIT_CLEAR(GPIOF_PUPDR, 0x000000FFUL);
+  64              		.loc 1 24 5 view .LVU7
+  65 0052 D3F80C24 		ldr	r2, [r3, #1036]
+  66 0056 22F0FF02 		bic	r2, r2, #255
+  67 005a C3F80C24 		str	r2, [r3, #1036]
+  25:Core/Src/init.c ****     BIT_SET(GPIOF_PUPDR, 0x02UL | 0x08UL | 0x20UL | 0x80UL);
+  68              		.loc 1 25 5 view .LVU8
+  69 005e D3F80C24 		ldr	r2, [r3, #1036]
+  70 0062 42F0AA02 		orr	r2, r2, #170
+  71 0066 C3F80C24 		str	r2, [r3, #1036]
   26:Core/Src/init.c **** 
-  27:Core/Src/init.c ****     // Подтяжка к земле (Pull-Down = 10b) для кнопок PF0..PF3 (GPIOF_PUPDR =
-  28:Core/Src/init.c ****     // PF0 -> 0x02, PF1 -> 0x08, PF2 -> 0x20, PF3 -> 0x80 (в сумме 0xAA)
-  29:Core/Src/init.c ****     (*(volatile uint32_t *)0x4002140CUL) &= ~(0x000000FFUL);
-  80              		.loc 1 29 5 is_stmt 1 view .LVU21
-  81              		.loc 1 29 6 is_stmt 0 view .LVU22
-  82 0058 D3F80C24 		ldr	r2, [r3, #1036]
-  83              		.loc 1 29 42 view .LVU23
-  84 005c 22F0FF02 		bic	r2, r2, #255
-  85 0060 C3F80C24 		str	r2, [r3, #1036]
-  30:Core/Src/init.c ****     (*(volatile uint32_t *)0x4002140CUL) |= 0x000000AAUL;
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc9DQSAT.s 			page 3
-
-
-  86              		.loc 1 30 5 is_stmt 1 view .LVU24
-  87              		.loc 1 30 6 is_stmt 0 view .LVU25
-  88 0064 D3F80C24 		ldr	r2, [r3, #1036]
-  89              		.loc 1 30 42 view .LVU26
-  90 0068 42F0AA02 		orr	r2, r2, #170
-  91 006c C3F80C24 		str	r2, [r3, #1036]
+  27:Core/Src/init.c ****     // Пины внешних светодиодов PF7, PF8, PF9 -> на ВЫХОД (01b в би
+  28:Core/Src/init.c ****     BIT_CLEAR(GPIOF_MODER, (3UL << 14) | (3UL << 16) | (3UL << 18));
+  72              		.loc 1 28 5 view .LVU9
+  73 006a D3F80024 		ldr	r2, [r3, #1024]
+  74 006e 22F47C22 		bic	r2, r2, #1032192
+  75 0072 C3F80024 		str	r2, [r3, #1024]
+  29:Core/Src/init.c ****     BIT_SET(GPIOF_MODER, (1UL << 14) | (1UL << 16) | (1UL << 18));
+  76              		.loc 1 29 5 view .LVU10
+  77 0076 D3F80024 		ldr	r2, [r3, #1024]
+  78 007a 42F4A822 		orr	r2, r2, #344064
+  79 007e C3F80024 		str	r2, [r3, #1024]
+  30:Core/Src/init.c ****     BIT_SET(GPIOF_OSPEEDR, (1UL << 14) | (1UL << 16) | (1UL << 18));
+  80              		.loc 1 30 5 view .LVU11
+  81 0082 D3F80824 		ldr	r2, [r3, #1032]
+  82 0086 42F4A822 		orr	r2, r2, #344064
+  83 008a C3F80824 		str	r2, [r3, #1032]
   31:Core/Src/init.c **** 
-  32:Core/Src/init.c ****     // Гасим внешние светодиоды PF7, PF8, PF9 при старте (GPIOF_BSRR
-  33:Core/Src/init.c ****     (*(volatile uint32_t *)0x40021418UL) = (1UL << 23) | (1UL << 24) | (1UL << 25);
-  92              		.loc 1 33 5 is_stmt 1 view .LVU27
-  93              		.loc 1 33 42 is_stmt 0 view .LVU28
-  94 0070 4FF06072 		mov	r2, #58720256
-  95 0074 C3F81824 		str	r2, [r3, #1048]
+  32:Core/Src/init.c ****     // Гасим внешние светодиоды при старте
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccMVZgzW.s 			page 3
+
+
+  33:Core/Src/init.c ****     BIT_SET(GPIOF_BSRR, (1UL << 23) | (1UL << 24) | (1UL << 25));
+  84              		.loc 1 33 5 view .LVU12
+  85 008e D3F81824 		ldr	r2, [r3, #1048]
+  86 0092 42F06072 		orr	r2, r2, #58720256
+  87 0096 C3F81824 		str	r2, [r3, #1048]
   34:Core/Src/init.c **** }...
-  96              		.loc 1 34 1 view .LVU29
-  97 0078 7047     		bx	lr
-  98              	.L3:
-  99 007a 00BF     		.align	2
- 100              	.L2:
- 101 007c 00300240 		.word	1073885184
- 102 0080 00000240 		.word	1073872896
- 103 0084 FC3FFFCF 		.word	-805355524
- 104 0088 01400010 		.word	268451841
- 105 008c 00008140 		.word	1082195968
- 106              		.cfi_endproc
- 107              	.LFE0:
- 109              		.text
- 110              	.Letext0:
- 111              		.file 2 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/machine/_default_types.
- 112              		.file 3 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/sys/_stdint.h"
-ARM GAS  C:\Users\user\AppData\Local\Temp\cc9DQSAT.s 			page 4
+  88              		.loc 1 34 1 is_stmt 0 view .LVU13
+  89 009a 7047     		bx	lr
+  90              	.L3:
+  91              		.align	2
+  92              	.L2:
+  93 009c 00300240 		.word	1073885184
+  94 00a0 00000240 		.word	1073872896
+  95 00a4 FC3FFFCF 		.word	-805355524
+  96 00a8 01400010 		.word	268451841
+  97              		.cfi_endproc
+  98              	.LFE0:
+ 100              		.text
+ 101              	.Letext0:
+ 102              		.file 2 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/machine/_default_types.
+ 103              		.file 3 "C:/Tools/xpack-arm-none-eabi-gcc-13.2.1-1.1/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  C:\Users\user\AppData\Local\Temp\ccMVZgzW.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 init.c
-C:\Users\user\AppData\Local\Temp\cc9DQSAT.s:21     .text.GPIO_Ini:00000000 $t
-C:\Users\user\AppData\Local\Temp\cc9DQSAT.s:27     .text.GPIO_Ini:00000000 GPIO_Ini
-C:\Users\user\AppData\Local\Temp\cc9DQSAT.s:101    .text.GPIO_Ini:0000007c $d
+C:\Users\user\AppData\Local\Temp\ccMVZgzW.s:21     .text.GPIO_Ini:00000000 $t
+C:\Users\user\AppData\Local\Temp\ccMVZgzW.s:27     .text.GPIO_Ini:00000000 GPIO_Ini
+C:\Users\user\AppData\Local\Temp\ccMVZgzW.s:93     .text.GPIO_Ini:0000009c $d
 
 NO UNDEFINED SYMBOLS

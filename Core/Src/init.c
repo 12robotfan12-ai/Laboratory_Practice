@@ -2,33 +2,33 @@
 
 void GPIO_Ini(void)
 {
-    // 1. Включение тактирования портов GPIOB (бит 1 = 0x02) и GPIOF (бит 5 = 0x20)
-    // Адрес RCC_AHB1ENR = 0x40023800 + 0x30 = 0x40023830
-    (*(volatile uint32_t *)0x40023830UL) |= 0x22UL;
+    // 1. Включение тактирования портов GPIOB и GPIOF через макрос BIT_SET
+    BIT_SET(RCC_AHB1ENR, RCC_GPIOB | RCC_GPIOF);
 
-    // 2. Настройка светодиодов на плате (PB0, PB7, PB14) на ВЫХОД (01b)
-    // Адрес GPIOB_MODER = 0x40020400 + 0x00
-    // PB0 -> бит 0 (0x01), PB7 -> бит 14 (0x4000), PB14 -> бит 28 (0x10000000)
-    (*(volatile uint32_t *)0x40020400UL) &= ~(0x3000C003UL);
-    (*(volatile uint32_t *)0x40020400UL) |= 0x10004001UL;
+    // 2. Настройка светодиодов платы (PB0 - зеленый, PB7 - синий, PB14 - красный) на ВЫХОД (01b)
+    BIT_CLEAR(GPIOB_MODER, (3UL << 0) | (3UL << 14) | (3UL << 28));
+    BIT_SET(GPIOB_MODER, (1UL << 0) | (1UL << 14) | (1UL << 28));
 
-    // Средняя скорость работы для PB0, PB7, PB14 (GPIOB_OSPEEDR = 0x40020408)
-    (*(volatile uint32_t *)0x40020408UL) |= 0x10004001UL;
+    // Настройка скорости работы PB0, PB7, PB14 на среднюю
+    BIT_SET(GPIOB_OSPEEDR, (1UL << 0) | (1UL << 14) | (1UL << 28));
 
-    // Гасим светодиоды платы при старте (GPIOB_BSRR = 0x40020418)
-    (*(volatile uint32_t *)0x40020418UL) = (1UL << 16) | (1UL << 23) | (1UL << 30);
+    // Гасим светодиоды платы при старте
+    BIT_SET(GPIOB_BSRR, (1UL << 16) | (1UL << 23) | (1UL << 30));
 
-    // 3. Настройка порта GPIOF (базовый адрес 0x40021400):
-    // Кнопки PF0, PF1, PF2, PF3 -> на ВХОД (00b в младших 8 битах GPIOF_MODER)
-    // Внешние светодиоды PF7, PF8, PF9 -> на ВЫХОД (01b в битах 14, 16, 18 GPIOF_MODER)
-    (*(volatile uint32_t *)0x40021400UL) &= ~(0x000FC0FFUL);
-    (*(volatile uint32_t *)0x40021400UL) |= 0x00054000UL;
+    // 3. Настройка порта GPIOF:
+    // Пины кнопок PF0, PF1, PF2, PF3 -> на ВХОД (00b)
+    BIT_CLEAR(GPIOF_MODER, 0x000000FFUL);
 
-    // Подтяжка к земле (Pull-Down = 10b) для кнопок PF0..PF3 (GPIOF_PUPDR = 0x4002140C)
+    // Подтяжка к земле (Pull-Down = 10b) для PF0, PF1, PF2, PF3:
     // PF0 -> 0x02, PF1 -> 0x08, PF2 -> 0x20, PF3 -> 0x80 (в сумме 0xAA)
-    (*(volatile uint32_t *)0x4002140CUL) &= ~(0x000000FFUL);
-    (*(volatile uint32_t *)0x4002140CUL) |= 0x000000AAUL;
+    BIT_CLEAR(GPIOF_PUPDR, 0x000000FFUL);
+    BIT_SET(GPIOF_PUPDR, 0x02UL | 0x08UL | 0x20UL | 0x80UL);
 
-    // Гасим внешние светодиоды PF7, PF8, PF9 при старте (GPIOF_BSRR = 0x40021418)
-    (*(volatile uint32_t *)0x40021418UL) = (1UL << 23) | (1UL << 24) | (1UL << 25);
+    // Пины внешних светодиодов PF7, PF8, PF9 -> на ВЫХОД (01b в битах 14, 16, 18)
+    BIT_CLEAR(GPIOF_MODER, (3UL << 14) | (3UL << 16) | (3UL << 18));
+    BIT_SET(GPIOF_MODER, (1UL << 14) | (1UL << 16) | (1UL << 18));
+    BIT_SET(GPIOF_OSPEEDR, (1UL << 14) | (1UL << 16) | (1UL << 18));
+
+    // Гасим внешние светодиоды при старте
+    BIT_SET(GPIOF_BSRR, (1UL << 23) | (1UL << 24) | (1UL << 25));
 }
